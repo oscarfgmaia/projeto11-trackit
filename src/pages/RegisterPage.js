@@ -1,29 +1,66 @@
 import { Link, useNavigate } from "react-router-dom"
 import styled from "styled-components"
 import logo from "../assets/imgs/logo.png"
+import { useState } from "react"
+import { ThreeDots } from 'react-loader-spinner'
+import axios from "axios"
+import { BASE_URL } from "../constants/urls"
 
 export default function RegisterPage() {
     const navigate = useNavigate()
-    let disabledSwitch = false;
+    const [disabledSwitch, setDisabledSwitch] = useState(false);
+    const [notDisabledSwitch, setNotDisabledSwitch] = useState(!disabledSwitch);
+    const [form, setForm] = useState({ email: '', name: '', image: '', password: '' });
+
+    function register(e) {
+        e.preventDefault();
+        setDisabledSwitch(true)
+        setNotDisabledSwitch(false)
+        axios.post(`${BASE_URL}/auth/sign-up`, form)
+            .then(res => {
+                setDisabledSwitch(false)
+                setNotDisabledSwitch(true)
+                console.log(res.data);
+                //navigate('/')
+            })
+            .catch(err => {
+                setDisabledSwitch(false)
+                setNotDisabledSwitch(true)
+                alert(err.response.data.message);
+            })
+    }
+    function handleChange(e) {
+        setForm({ ...form, [e.target.name]: e.target.value });
+    }
+
     return (
         <RegisterContainer disable={disabledSwitch}>
             <img src={logo} alt="Logo" />
             <form onSubmit={register}>
-                <input type="email" placeholder="email" required disabled={disabledSwitch} />
-                <input type="password" placeholder="senha" required disabled={disabledSwitch} />
-                <input type="text" placeholder="nome" required disabled={disabledSwitch} />
-                <input type="text" placeholder="foto" required disabled={disabledSwitch} />
-                <button type="submit" disabled={disabledSwitch}>Cadastrar</button>
+                <input name="email" value={form.email} onChange={handleChange} type="email" placeholder="email" required disabled={disabledSwitch} />
+                <input name="password" value={form.password} onChange={handleChange} type="password" placeholder="senha" required disabled={disabledSwitch} />
+                <input name="name" value={form.name} onChange={handleChange} type="text" placeholder="nome" required disabled={disabledSwitch} />
+                <input name="image" value={form.image} onChange={handleChange} type="text" placeholder="foto" required disabled={disabledSwitch} />
+                <button type="submit" disabled={disabledSwitch}>
+                    <StyledButtonText visible={notDisabledSwitch}>Cadastrar</StyledButtonText>
+                    <ThreeDots color="white" visible={disabledSwitch} />
+                </button>
             </form>
             <Link to={'/'}><span>Já tem uma conta? Faça login!</span></Link>
         </RegisterContainer>
     )
-
-    function register() {
-        alert("Usuário Registrado")
-        navigate('/')
-    }
 }
+
+<ThreeDots
+    height="80"
+    width="80"
+    radius="9"
+    color="#4fa94d"
+    ariaLabel="three-dots-loading"
+    wrapperStyle={{}}
+    wrapperClassName=""
+    visible={true}
+/>
 
 const RegisterContainer = styled.div`
     display: flex;
@@ -65,3 +102,7 @@ const RegisterContainer = styled.div`
         flex-direction: column;
     }
     `
+
+const StyledButtonText = styled.h1`
+    display: ${props => props.visible ? 'contents' : 'none'};
+`

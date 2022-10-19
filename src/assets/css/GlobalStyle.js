@@ -70,6 +70,9 @@ const GlobalStyle = createGlobalStyle`
     }
     
     button{
+        display: flex;
+        align-items: center;
+        justify-content: center;
         font-family: 'Lexend Deca';
         text-align: center;
         background: #52B6FF;

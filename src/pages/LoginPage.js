@@ -1,28 +1,70 @@
 import { Link, useNavigate } from "react-router-dom"
 import styled from "styled-components"
 import logo from "../assets/imgs/logo.png"
+import { ThreeDots } from 'react-loader-spinner'
+import { useState } from "react"
+import { BASE_URL } from "../constants/urls"
+import axios from "axios"
 
 export default function LoginPage() {
     const navigate = useNavigate()
-    let disabledSwitch = false;
+    const [disabledSwitch, setDisabledSwitch] = useState(false);
+    const [notDisabledSwitch, setNotDisabledSwitch] = useState(true);
+    const [form, setForm] = useState({ email: '', password: '' })
+
+    function login(e) {
+        e.preventDefault();
+        setDisabledSwitch(true)
+        setNotDisabledSwitch(false)
+
+        axios.post(`${BASE_URL}/auth/login`,form)
+        .then(res => {
+            setDisabledSwitch(false)
+            setNotDisabledSwitch(true)
+            console.log(res.data)
+            //navigate('/hoje')
+        })
+        .catch(err => {
+            alert(err.response.data.message)
+            setDisabledSwitch(false)
+            setNotDisabledSwitch(true)
+        })
+    }
+
+    function handleChange(e) {
+        setForm({ ...form, [e.target.name]: e.target.value })
+    }
+    
     return (
         <LoginContainer disable={disabledSwitch}>
             <img src={logo} alt="Logo" />
             <form onSubmit={login}>
-                <input type="email" placeholder="email" required disabled={disabledSwitch}/>
-                <input type="password" placeholder="senha" required disabled={disabledSwitch}/>
-                <button disabled={disabledSwitch} type="submit">Entrar</button>
+                <input name="email" value={form.email} onChange={handleChange} type="email" placeholder="email" required disabled={disabledSwitch} />
+                <input name="password" value={form.password} onChange={handleChange} type="password" placeholder="senha" required disabled={disabledSwitch} />
+                <button disabled={disabledSwitch} type="submit">
+                    <StyledButtonText visible={notDisabledSwitch}>
+                        Entrar
+                    </StyledButtonText>
+                    <ThreeDots color="white" visible={disabledSwitch} />
+                </button>
             </form>
             <Link to={"/cadastro"}><span>Não tem uma conta? Cadastre-se</span></Link>
+
+
         </LoginContainer>
     )
-
-    function login(){
-        alert("Usuário logou")
-        navigate('/hoje')
-    }
-
 }
+
+<ThreeDots
+    height="80"
+    width="80"
+    radius="9"
+    color="#4fa94d"
+    ariaLabel="three-dots-loading"
+    wrapperStyle={{}}
+    wrapperClassName=""
+    visible={true}
+/>
 
 
 const LoginContainer = styled.div`
@@ -65,3 +107,7 @@ const LoginContainer = styled.div`
         flex-direction: column;
     }
     `
+
+const StyledButtonText = styled.h1`
+    display: ${props => props.visible ? 'contents' : 'none'};
+`
