@@ -2,30 +2,30 @@ import { Link, useNavigate } from "react-router-dom"
 import styled from "styled-components"
 import logo from "../assets/imgs/logo.png"
 
-export default function LoginPage() {
+export default function RegisterPage() {
     const navigate = useNavigate()
     let disabledSwitch = false;
     return (
-        <LoginContainer disable={disabledSwitch}>
+        <RegisterContainer disable={disabledSwitch}>
             <img src={logo} alt="Logo" />
-            <form onSubmit={login}>
-                <input type="email" placeholder="email" required disabled={disabledSwitch}/>
-                <input type="password" placeholder="senha" required disabled={disabledSwitch}/>
-                <button disabled={disabledSwitch} type="submit">Entrar</button>
+            <form onSubmit={register}>
+                <input type="email" placeholder="email" required disabled={disabledSwitch} />
+                <input type="password" placeholder="senha" required disabled={disabledSwitch} />
+                <input type="text" placeholder="nome" required disabled={disabledSwitch} />
+                <input type="text" placeholder="foto" required disabled={disabledSwitch} />
+                <button type="submit" disabled={disabledSwitch}>Cadastrar</button>
             </form>
-            <Link to={"/cadastro"}><span>Não tem uma conta? Cadastre-se</span></Link>
-        </LoginContainer>
+            <Link to={'/'}><span>Já tem uma conta? Faça login!</span></Link>
+        </RegisterContainer>
     )
 
-    function login(){
-        alert("Usuário logou")
-        navigate('/hoje')
+    function register() {
+        alert("Usuário Registrado")
+        navigate('/')
     }
-
 }
 
-
-const LoginContainer = styled.div`
+const RegisterContainer = styled.div`
     display: flex;
     flex-direction: column;
     justify-content: center;

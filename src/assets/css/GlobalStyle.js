@@ -20,6 +20,7 @@ const GlobalStyle = createGlobalStyle`
         font-size: 100%;
         font: inherit;
         vertical-align: baseline;
+        font-family: 'Lexend Deca', sans-serif;        
     }
     /* HTML5 display-role reset for older browsers */
     article, aside, details, figcaption, figure, 
@@ -45,12 +46,36 @@ const GlobalStyle = createGlobalStyle`
         border-spacing: 0;
     }
     input{
+        padding-left: 11px;
         box-sizing: border-box;
         width: 303px;
         height: 45px;
         background: #FFFFFF;
         border: 1px solid #D5D5D5;
         border-radius: 5px;
+        font-family: 'Lexend Deca', sans-serif;    
+        font-style: normal;
+        font-weight: 400;
+        font-size: 19.976px;
+        line-height: 25px;
+        color: black;
+        ::placeholder{
+            font-family: 'Lexend Deca', sans-serif;    
+            font-style: normal;
+            font-weight: 400;
+            font-size: 19.976px;
+            line-height: 25px;
+            color: #DBDBDB;
+        }
+    }
+    
+    button{
+        font-family: 'Lexend Deca';
+        text-align: center;
+        background: #52B6FF;
+        border:none;
+        border-radius: 4.63636px;
+        color:#FFF;
     }
 
 `
