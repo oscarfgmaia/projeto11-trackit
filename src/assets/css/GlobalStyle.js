@@ -64,7 +64,6 @@ const GlobalStyle = createGlobalStyle`
             font-style: normal;
             font-weight: 400;
             font-size: 19.976px;
-            line-height: 25px;
             color: #DBDBDB;
         }
     }

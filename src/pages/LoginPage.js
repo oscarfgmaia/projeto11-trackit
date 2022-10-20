@@ -2,16 +2,17 @@ import { Link, useNavigate } from "react-router-dom"
 import styled from "styled-components"
 import logo from "../assets/imgs/logo.png"
 import { ThreeDots } from 'react-loader-spinner'
-import { useState } from "react"
+import { useContext, useState } from "react"
 import { BASE_URL } from "../constants/urls"
 import axios from "axios"
+import { LoginContext } from "../Contexts/LoginContext"
 
 export default function LoginPage() {
     const navigate = useNavigate()
     const [disabledSwitch, setDisabledSwitch] = useState(false);
     const [notDisabledSwitch, setNotDisabledSwitch] = useState(true);
     const [form, setForm] = useState({ email: '', password: '' })
-
+    const {user,setUser} = useContext(LoginContext);
     function login(e) {
         e.preventDefault();
         setDisabledSwitch(true)
@@ -21,8 +22,8 @@ export default function LoginPage() {
         .then(res => {
             setDisabledSwitch(false)
             setNotDisabledSwitch(true)
-            console.log(res.data)
-            //navigate('/hoje')
+            setUser(res.data)
+            navigate('/habitos')
         })
         .catch(err => {
             alert(err.response.data.message)
@@ -54,18 +55,6 @@ export default function LoginPage() {
         </LoginContainer>
     )
 }
-
-<ThreeDots
-    height="80"
-    width="80"
-    radius="9"
-    color="#4fa94d"
-    ariaLabel="three-dots-loading"
-    wrapperStyle={{}}
-    wrapperClassName=""
-    visible={true}
-/>
-
 
 const LoginContainer = styled.div`
     display: flex;

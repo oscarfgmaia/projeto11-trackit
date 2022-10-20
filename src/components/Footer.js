@@ -11,6 +11,7 @@ export default function Footer(){
 
 const StyledFooter = styled.div`
     position: fixed;
+    z-index: 999;
     bottom: 0;
     left: 0;
     box-sizing: border-box;
@@ -27,7 +28,7 @@ const StyledFooter = styled.div`
         line-height: 22px;
         text-align: center;
 
-        color: #52B6FF;
+        color:#52B6FF;
     }
     img{
         width: 51px;

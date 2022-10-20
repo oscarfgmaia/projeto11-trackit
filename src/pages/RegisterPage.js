@@ -24,9 +24,9 @@ export default function RegisterPage() {
                 //navigate('/')
             })
             .catch(err => {
+                alert(err.response.data.message);
                 setDisabledSwitch(false)
                 setNotDisabledSwitch(true)
-                alert(err.response.data.message);
             })
     }
     function handleChange(e) {

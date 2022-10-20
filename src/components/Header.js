@@ -1,16 +1,20 @@
+import { useContext } from "react";
 import styled from "styled-components";
+import { LoginContext } from "../Contexts/LoginContext";
 
 export default function Header(){
+    const {user} = useContext(LoginContext)
     return(
         <StyledHeader>
             <h1>TrackIt</h1>
-            <img src="https://img.assinaja.com/upl/lojas/mundosinfinitos/imagens/foto-one-piece.png" alt="Profile Pic"/>
+            <img src={`${user.image}`} alt="Profile Pic"/>
         </StyledHeader>
     )
 }
 
 const StyledHeader = styled.div`
     position: fixed;
+    z-index: 999;
     top: 0;
     left: 0;
     box-sizing: border-box;

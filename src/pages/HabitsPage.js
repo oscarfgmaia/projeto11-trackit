@@ -2,30 +2,91 @@ import Footer from "../components/Footer";
 import Header from "../components/Header";
 import PagesBackground from "../assets/css/PagesBackground"
 import styled from "styled-components";
+import axios from "axios";
+import { BASE_URL } from "../constants/urls";
+import { useContext, useEffect, useState } from "react";
+import { LoginContext } from "../Contexts/LoginContext";
+import CreateHabit from "../components/CreateHabit";
+import LoadingPage from "../components/LoadingPage";
+import Habit from "../components/Habit";
+
 
 export default function HabitsPage() {
-    return (
-        <>
-            <Header />
-            <PagesBackground>
-                <StyledNewHabit>
-                    <h1>Meus Hábitos</h1>
-                    <button>+</button>
-                </StyledNewHabit>
-                <StyledText>
-                    <h1>
-                    Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para começar a trackear!
-                    </h1>
-                </StyledText>
-            </PagesBackground>
-            <Footer />
-        </>
-    )
+    const { user } = useContext(LoginContext);
+    const [start, setStart] = useState(false)
+    const [createHabitBtn, setCreateHabitBtn] = useState(false)
+    const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NTk2OSwiaWF0IjoxNjY2MjA1MTkzfQ.LRHldZEEV5qM_kSKl4wcLBcGhJwAIiIHwWW_dPVke7s"
+    const [habits, setHabits] = useState([])
+    useEffect(() => {
+        axios.get(`${BASE_URL}/habits`, {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        })
+            .then(res => {
+                setStart(true);
+                setHabits(res.data)
+                console.log(res.data)
+            })
+            .catch(err => {
+                console.log(err.response.data)
+            })
+    }, [createHabitBtn])
+
+    if (start === false) {
+        return <LoadingPage />
+    }
+
+    function createHabit() {
+        setCreateHabitBtn(!createHabitBtn)
+    }
+
+    if (habits.length === 0) {
+        return (
+            <>
+                <Header />
+                <PagesBackground>
+                    <StyledNewHabit>
+                        <h1>Meus Hábitos</h1>
+                        <button onClick={createHabit}>+</button>
+                    </StyledNewHabit>
+                    {createHabitBtn && <CreateHabit setCreateHabitBtn={setCreateHabitBtn} />}
+                    <StyledText>
+                        <h1>
+                            Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para começar a trackear!
+                        </h1>
+                    </StyledText>
+                </PagesBackground>
+                <Footer />
+            </>
+        )
+    }
+    else {
+        return (
+            <>
+                <Header />
+                <PagesBackground>
+                    <StyledNewHabit>
+                        <h1>Meus Hábitos</h1>
+                        <button onClick={createHabit}>+</button>
+                    </StyledNewHabit>
+                    {createHabitBtn && <CreateHabit setCreateHabitBtn={setCreateHabitBtn} />}
+                    <StyledText>
+                        {habits.map((e) => <Habit key={e.id} name={e.name} days={e.days}/>)}
+                    </StyledText>
+                </PagesBackground>
+                <Footer />
+            </>
+        )
+    }
+
 }
+
 
 const StyledNewHabit = styled.div`
     display: flex;
     justify-content: space-between;
+    align-items: flex-end;
     width: 100%;
     h1{
         font-family: 'Lexend Deca';
@@ -34,6 +95,7 @@ const StyledNewHabit = styled.div`
         font-size: 22.976px;
         line-height: 29px;
         color: #126BA5;
+        align-items: flex-start;
     }
     button{
         align-items: center;
