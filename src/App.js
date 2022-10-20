@@ -9,7 +9,7 @@ import RegisterPage from "./pages/RegisterPage";
 import TodayPage from "./pages/TodayPage";
 
 export default function App() {
-  const [user, setUser] = useState({ id: null, name: null, image: null, email: null, password: null, token: null })
+  const [user, setUser] = useState({ id: null, name: null, image: null, email: null, password: null, token: null, progess: null })
   return (
     <BrowserRouter>
       <GlobalStyle />

@@ -1,7 +1,27 @@
+import axios from "axios"
+import { useContext, useState } from "react"
 import styled from "styled-components"
 import checkBox from "../assets/imgs/checkbox.svg"
+import { BASE_URL } from "../constants/urls"
+import { LoginContext } from "../Contexts/LoginContext"
 
-export default function TodayHabit({ name, currentSequence,highestSequence }) {
+export default function TodayHabit({ name, currentSequence, highestSequence, id, done, handleEffect, setHandleEffect }) {
+    const { user } = useContext(LoginContext);
+    const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NTk2OSwiaWF0IjoxNjY2MjA1MTkzfQ.LRHldZEEV5qM_kSKl4wcLBcGhJwAIiIHwWW_dPVke7s"
+
+    function onClick() {
+        axios.post(`${BASE_URL}/habits/${id}/check`,{},{
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        })
+            .then(res => {
+                setHandleEffect(!handleEffect)
+            })
+            .catch(err => {
+                console.log(err.response.data.message)
+            })
+    }
 
     return (
         <StyledContainer>
@@ -11,11 +31,33 @@ export default function TodayHabit({ name, currentSequence,highestSequence }) {
                 <h2>Seu recorde: {highestSequence} dias</h2>
             </StyledLeft>
             <StyledRight>
-                <img src={checkBox}></img>
+                <StyledCheckBox done={done} src={checkBox} onClick={onClick} />
             </StyledRight>
         </StyledContainer>
     )
 }
+
+const StyledCheckBox = styled.img`
+    filter: ${props => props.done === true ? (
+        `
+            invert(69%) 
+            sepia(40%) 
+            saturate(597%) 
+            hue-rotate(44deg) 
+            brightness(97%) 
+            contrast(87%);
+        `
+    ) : (
+        `
+            invert(100%)
+            sepia(1%)
+            saturate(10%)
+            hue-rotate(161deg)
+            brightness(115%)
+            contrast(81%);
+        `
+    )}
+`
 
 const StyledLeft = styled.div`
         display: flex ;
@@ -34,23 +76,6 @@ const StyledLeft = styled.div`
 
 `
 const StyledRight = styled.div`
-img{
-    filter: 
-    invert(100%)
-    sepia(1%)
-    saturate(10%)
-    hue-rotate(161deg)
-    brightness(115%)
-    contrast(81%);
-/*
-    filter: 
-    invert(69%) 
-    sepia(40%) 
-    saturate(597%) 
-    hue-rotate(44deg) 
-    brightness(97%) 
-    contrast(87%);*/
-}
     button{
         width: 69px;
         height: 69px;

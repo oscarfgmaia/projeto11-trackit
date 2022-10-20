@@ -10,13 +10,15 @@ import * as dayjs from "dayjs";
 import LoadingPage from "../components/LoadingPage"
 import TodayHabit from "../components/TodayHabits";
 export default function TodayPage() {
-    const { user } = useContext(LoginContext);
+    const { user, setUser } = useContext(LoginContext);
     const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NTk2OSwiaWF0IjoxNjY2MjA1MTkzfQ.LRHldZEEV5qM_kSKl4wcLBcGhJwAIiIHwWW_dPVke7s"
     const dayOfWeek = dayjs().day()
     const dayOfMonth = dayjs().date()
     const monthOfYear = dayjs().month() + 1 // months goes from 0 to 11
     const [habits, setHabits] = useState([])
     const [startPage, setStartPage] = useState(false)
+    const [handleEffect, setHandleEffect] = useState(false)
+
     let week = undefined;
     switch (dayOfWeek) {
         case 0:
@@ -47,21 +49,28 @@ export default function TodayPage() {
 
     useEffect(() => {
         document.body.style.backgroundColor = "#E5E5E5";
-        axios.get(`${BASE_URL}/habits/today`, {
-            headers: {
-                'Authorization': `Bearer ${user.token}`
-            }
-        })
-            .then(res => {
-                console.log(res.data)
-                setHabits(res.data)
-                setStartPage(true)
+        function getData() {
+            axios.get(`${BASE_URL}/habits/today`, {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
             })
-            .catch(err => {
-                console.log(err.response.data.message)
-            })
+                .then(res => {
+                    setHabits(res.data);
+                    setStartPage(true);
+                })
+                .catch(err => {
+                    console.log(err.response.data.message)
+                })
+        }
+        getData()
+        console.log(habits)
+    }, [handleEffect])
 
-    }, [])
+    function aumentarProgress() {
+        const newUser = { ...user, progress: 50 }
+        setUser(newUser)
+    }
 
     if (startPage === false) {
         return <LoadingPage />
@@ -92,13 +101,17 @@ export default function TodayPage() {
                 <PagesBackground>
                     <StyledNewHabit>
                         <h1>{week}, {dayOfMonth}/{monthOfYear}</h1>
-                        <h2>Nenhum hábito concluído ainda</h2>
+                        {habits.some(elem => elem.done === true) ? <h2>{user.progress}% dos hábitos concluídos</h2> : <h3> Nenhum hábito concluído ainda</h3>}
+                        <button onClick={aumentarProgress}>AUMENTAR PROGRESS</button>
                     </StyledNewHabit>
                     <StyledText>
                         {habits.map((e) => <TodayHabit
                             key={e.id}
                             id={e.id}
                             name={e.name}
+                            done={e.done}
+                            handleEffect={handleEffect}
+                            setHandleEffect={setHandleEffect}
                             currentSequence={e.currentSequence}
                             highestSequence={e.highestSequence}
                         />)}
@@ -127,16 +140,13 @@ const StyledNewHabit = styled.div`
         font-weight: 400;
         font-size: 17.976px;
         line-height: 22px;
-        color: #BABABA;
+        color: #8FC549;
     }
-    button{
-        align-items: center;
-        justify-content: center;
-        width: 40px;
-        height: 35px;
-        font-family: 'Lexend Deca';
-        font-size: 26.976px;
-        color: #FFFFFF;
+    h3{
+        font-weight: 400;
+        font-size: 17.976px;
+        line-height: 22px;
+        color: #BABABA;
     }
 `
 
