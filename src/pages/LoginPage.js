@@ -2,7 +2,7 @@ import { Link, useNavigate } from "react-router-dom"
 import styled from "styled-components"
 import logo from "../assets/imgs/logo.png"
 import { ThreeDots } from 'react-loader-spinner'
-import { useContext, useState } from "react"
+import { useContext, useEffect, useState } from "react"
 import { BASE_URL } from "../constants/urls"
 import axios from "axios"
 import { LoginContext } from "../Contexts/LoginContext"
@@ -13,6 +13,11 @@ export default function LoginPage() {
     const [notDisabledSwitch, setNotDisabledSwitch] = useState(true);
     const [form, setForm] = useState({ email: '', password: '' })
     const {user,setUser} = useContext(LoginContext);
+
+    useEffect(()=>{
+        document.body.style.backgroundColor="white";
+    },[])
+
     function login(e) {
         e.preventDefault();
         setDisabledSwitch(true)
@@ -23,7 +28,7 @@ export default function LoginPage() {
             setDisabledSwitch(false)
             setNotDisabledSwitch(true)
             setUser(res.data)
-            navigate('/habitos')
+            navigate('/hoje')
         })
         .catch(err => {
             alert(err.response.data.message)

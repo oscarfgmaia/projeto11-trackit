@@ -23,7 +23,6 @@ export default function CreateHabit({ setCreateHabitBtn }) {
     const [disabledSwitch, setDisabledSwitch] = useState(false);
     const [notDisabledSwitch, setNotDisabledSwitch] = useState(true);
     function handleChange(e) {
-        console.log(e.target.value)
         setForm({ ...form, [e.target.name]: e.target.value })
 
     }

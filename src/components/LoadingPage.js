@@ -1,13 +1,19 @@
 import { ThreeDots } from "react-loader-spinner";
 import styled from "styled-components"
+import Footer from "./Footer";
+import Header from "./Header";
 
-export default function LoadingPage(){
-    return(
-        <EntirePage>
-            <ThreeDots color="#52B6FF"/>
-        </EntirePage>
+export default function LoadingPage() {
+    return (
+        <>
+            <Header />
+            <EntirePage>
+                <ThreeDots color="#52B6FF" />
+            </EntirePage>
+            <Footer />
+        </>
     )
-    
+
 }
 /*
 <ThreeDots

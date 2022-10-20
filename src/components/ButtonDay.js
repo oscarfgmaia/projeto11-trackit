@@ -21,7 +21,6 @@ export default function ButtonDay({ children, clicked, value, days, setDays, set
         }
         setForm({ ...form, days: onlyDaysNumbers })
         setDays(newArr);
-        console.log(form)
     }
 
 

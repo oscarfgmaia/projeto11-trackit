@@ -7,7 +7,9 @@ export default function Footer() {
             <Link to={'/habitos'}>
                 <h1>Hábitos</h1>
             </Link>
-            
+            <Link to={'/hoje'}>
+                <h1>Hoje</h1>
+            </Link>
             <Link to={'/historico'}>
                 <h1>Históricos</h1>
             </Link>

@@ -60,6 +60,7 @@ export default function Habit({ name, days, id, setHandleUseEffect, handleUseEff
 
 const StyledTitle = styled.div`
 display: flex;
+align-items: flex-start;
 justify-content: space-between;
 width: 100%;
 h1{
