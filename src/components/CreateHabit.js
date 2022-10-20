@@ -10,13 +10,13 @@ export default function CreateHabit({ setCreateHabitBtn }) {
     const { user } = useContext(LoginContext)
     const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NTk2OSwiaWF0IjoxNjY2MjA1MTkzfQ.LRHldZEEV5qM_kSKl4wcLBcGhJwAIiIHwWW_dPVke7s"
     const [days, setDays] = useState([
-        { value: 1, day: 'D', clicked: false },
+        { value: 0, day: 'D', clicked: false },
+        { value: 1, day: 'S', clicked: false },
         { value: 2, day: 'T', clicked: false },
         { value: 3, day: 'Q', clicked: false },
         { value: 4, day: 'Q', clicked: false },
         { value: 5, day: 'S', clicked: false },
         { value: 6, day: 'S', clicked: false },
-        { value: 0, day: 'S', clicked: false },
     ]);
     const [onlyDays, setOnlyDays] = useState([])
     const [form, setForm] = useState({ name: '', days: onlyDays })
@@ -30,24 +30,32 @@ export default function CreateHabit({ setCreateHabitBtn }) {
 
     function onSubmit(e) {
         e.preventDefault();
-        setDisabledSwitch(true)
-        setNotDisabledSwitch(false)
-        axios.post(`${BASE_URL}/habits`, form, {
-            headers: {
-                'Authorization': `Bearer ${token}`
-            }
-        })
-            .then(res => {
-                console.log(res.data)
-                setDisabledSwitch(false)
-                setNotDisabledSwitch(true)
-                setCreateHabitBtn(false)
+        if (form.days.length === 0) {
+            alert("Você deve inserir ao menos um dia!")
+            setDisabledSwitch(false)
+            setNotDisabledSwitch(true)
+        }
+        else {
+            setDisabledSwitch(true)
+            setNotDisabledSwitch(false)
+
+            axios.post(`${BASE_URL}/habits`, form, {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
             })
-            .catch(err => {
-                console.log(err.response.data.message)
-                setDisabledSwitch(false)
-                setNotDisabledSwitch(true)
-            })
+                .then(res => {
+                    console.log(res.data)
+                    setDisabledSwitch(false)
+                    setNotDisabledSwitch(true)
+                    setCreateHabitBtn(false)
+                })
+                .catch(err => {
+                    console.log(err.response.data.message)
+                    setDisabledSwitch(false)
+                    setNotDisabledSwitch(true)
+                })
+        }
     }
 
     return (

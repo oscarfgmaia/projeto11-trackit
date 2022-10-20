@@ -12,9 +12,10 @@ import Habit from "../components/Habit";
 
 
 export default function HabitsPage() {
-    const { user } = useContext(LoginContext);
     const [start, setStart] = useState(false)
     const [createHabitBtn, setCreateHabitBtn] = useState(false)
+    const { user } = useContext(LoginContext);
+    const [handleUseEffect, setHandleUseEffect] = useState(true)
     const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NTk2OSwiaWF0IjoxNjY2MjA1MTkzfQ.LRHldZEEV5qM_kSKl4wcLBcGhJwAIiIHwWW_dPVke7s"
     const [habits, setHabits] = useState([])
     useEffect(() => {
@@ -26,12 +27,11 @@ export default function HabitsPage() {
             .then(res => {
                 setStart(true);
                 setHabits(res.data)
-                console.log(res.data)
             })
             .catch(err => {
                 console.log(err.response.data)
             })
-    }, [createHabitBtn])
+    }, [createHabitBtn, handleUseEffect])
 
     if (start === false) {
         return <LoadingPage />
@@ -72,7 +72,15 @@ export default function HabitsPage() {
                     </StyledNewHabit>
                     {createHabitBtn && <CreateHabit setCreateHabitBtn={setCreateHabitBtn} />}
                     <StyledText>
-                        {habits.map((e) => <Habit key={e.id} name={e.name} days={e.days}/>)}
+                        {habits.map((e) =>
+                            <Habit
+                                handleUseEffect={handleUseEffect}
+                                setHandleUseEffect={setHandleUseEffect}
+                                key={e.id}
+                                id={e.id}
+                                name={e.name}
+                                days={e.days}
+                            />)}
                     </StyledText>
                 </PagesBackground>
                 <Footer />

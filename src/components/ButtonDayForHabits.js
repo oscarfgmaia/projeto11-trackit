@@ -1,9 +1,6 @@
 import styled from "styled-components"
 
 export default function ButtonDayForHabits({ children,value, days}) {
-    console.log(days)
-    console.log(value)
-    
     return (
         <StyledButton active={days.includes(value)} type="button">{children}</StyledButton>
     )

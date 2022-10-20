@@ -1,24 +1,47 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import styled from "styled-components"
-import ButtonDay from "./ButtonDay"
 import ButtonDayForHabits from "./ButtonDayForHabits";
 import trash from "../assets/imgs/trash.svg"
-export default function Habit({ name, days }) {
+import axios from "axios";
+import { BASE_URL } from "../constants/urls";
+import { LoginContext } from "../Contexts/LoginContext";
+
+export default function Habit({ name, days, id, setHandleUseEffect, handleUseEffect }) {
+    const { user } = useContext(LoginContext);
+    const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NTk2OSwiaWF0IjoxNjY2MjA1MTkzfQ.LRHldZEEV5qM_kSKl4wcLBcGhJwAIiIHwWW_dPVke7s"
+
+    function deleteHabit() {
+        if (window.confirm("Você têm certeza que deseja excluir esse hábito?") == true) {
+
+            axios.delete(`${BASE_URL}/habits/${id}`, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            })
+                .then(res => {
+                    setHandleUseEffect(!handleUseEffect)
+                })
+                .catch(err => {
+                    console.log(err.response.data.message)
+                })
+        }
+    }
+
     const [defaultDays, setDefaultDays] = useState([
-        { value: 1, day: 'D' },
+        { value: 0, day: 'D' },
+        { value: 1, day: 'S' },
         { value: 2, day: 'T' },
         { value: 3, day: 'Q' },
         { value: 4, day: 'Q' },
         { value: 5, day: 'S' },
         { value: 6, day: 'S' },
-        { value: 0, day: 'S' },
     ]);
-    const [disabled, setDisabled] = useState(false)
+
     return (
         <StyledContainer>
             <StyledTitle>
                 <h1>{name}</h1>
-                <img src={trash} onClick={()=>alert("APAGAR")}/>
+                <img src={trash} onClick={deleteHabit} />
             </StyledTitle>
             <ButtonsContainer>
                 {defaultDays.map((d) =>
