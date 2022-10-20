@@ -1,10 +1,16 @@
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 
-export default function Footer(){
-    return(
+export default function Footer() {
+    return (
         <StyledFooter>
-            <h1>Hábitos</h1>
-            <h1>Históricos</h1>
+            <Link to={'/habitos'}>
+                <h1>Hábitos</h1>
+            </Link>
+            
+            <Link to={'/historico'}>
+                <h1>Históricos</h1>
+            </Link>
         </StyledFooter>
     )
 }
@@ -20,14 +26,17 @@ const StyledFooter = styled.div`
     justify-content: space-between;
     height: 70px;
     background: #FFF;
+    a{
+      text-decoration:none ;
+    }
     h1{
+        background-color: #FFF;
         font-family: 'Lexend Deca';
         font-style: normal;
         font-weight: 400;
         font-size: 17.976px;
         line-height: 22px;
         text-align: center;
-
         color:#52B6FF;
     }
     img{

@@ -2,23 +2,69 @@ import Footer from "../components/Footer";
 import Header from "../components/Header";
 import PagesBackground from "../assets/css/PagesBackground"
 import styled from "styled-components";
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import { LoginContext } from "../Contexts/LoginContext";
+import axios from "axios";
+import { BASE_URL } from "../constants/urls"
+import * as dayjs from "dayjs";
 
 export default function TodayPage() {
-    const {user} = useContext(LoginContext);
+    const { user } = useContext(LoginContext);
+    const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NTk2OSwiaWF0IjoxNjY2MjA1MTkzfQ.LRHldZEEV5qM_kSKl4wcLBcGhJwAIiIHwWW_dPVke7s"
+    const dayOfWeek = dayjs().day()
+    const dayOfMonth = dayjs().date()
+    const monthOfYear = dayjs().month()+1 // months goes from 0 to 11
+    let week = undefined;
+    switch (dayOfWeek) {
+        case 0:
+            week = 'Domingo'
+            break;
+        case 1:
+            week = 'Segunda'
+            break;
+        case 2:
+            week = 'Terça'
+            break;
+        case 3:
+            week = 'Quarta'
+            break;
+        case 4:
+            week = 'Quinta'
+            break;
+        case 5:
+            week = 'Sexta'
+            break;
+        case 6:
+            week = 'Sábado'
+            break;
+        default:
+            alert('Dia da semana falhou em carregar!')
+            break;
+    }
+
+    axios.get(`${BASE_URL}/habits/today`, {
+        headers: {
+            Authorization: `Bearer ${token}`
+        }
+    })
+        .then(res => {
+            console.log(res.data)
+        })
+        .catch(err => {
+            console.log(err.response.data.message)
+        })
 
     return (
         <>
             <Header />
             <PagesBackground>
                 <StyledNewHabit>
-                    <h1>Meus Hábitos</h1>
-                    <button>+</button>
+                    <h1>{week}, {dayOfMonth}/{monthOfYear}</h1>
+                    <h2>Nenhum hábito concluído ainda</h2>
                 </StyledNewHabit>
                 <StyledText>
                     <h1>
-                    Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para começar a trackear!
+                        Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para começar a trackear!
                     </h1>
                 </StyledText>
             </PagesBackground>
@@ -29,6 +75,7 @@ export default function TodayPage() {
 
 const StyledNewHabit = styled.div`
     display: flex;
+    flex-direction: column;
     justify-content: space-between;
     width: 100%;
     h1{
@@ -38,6 +85,12 @@ const StyledNewHabit = styled.div`
         font-size: 22.976px;
         line-height: 29px;
         color: #126BA5;
+    }
+    h2{
+        font-weight: 400;
+        font-size: 17.976px;
+        line-height: 22px;
+        color: #BABABA;
     }
     button{
         align-items: center;

@@ -21,7 +21,7 @@ export default function RegisterPage() {
                 setDisabledSwitch(false)
                 setNotDisabledSwitch(true)
                 console.log(res.data);
-                //navigate('/')
+                navigate('/')
             })
             .catch(err => {
                 alert(err.response.data.message);
@@ -29,6 +29,7 @@ export default function RegisterPage() {
                 setNotDisabledSwitch(true)
             })
     }
+    
     function handleChange(e) {
         setForm({ ...form, [e.target.name]: e.target.value });
     }
