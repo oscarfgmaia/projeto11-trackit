@@ -7,10 +7,11 @@ import { LoginContext } from "../Contexts/LoginContext"
 
 export default function TodayHabit({ name, currentSequence, highestSequence, id, done, handleEffect, setHandleEffect }) {
     const { user } = useContext(LoginContext);
+
     const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NTk2OSwiaWF0IjoxNjY2MjA1MTkzfQ.LRHldZEEV5qM_kSKl4wcLBcGhJwAIiIHwWW_dPVke7s"
 
     function onClick() {
-        axios.post(`${BASE_URL}/habits/${id}/check`,{},{
+        axios.post(`${BASE_URL}/habits/${id}/check`, {}, {
             headers: {
                 'Authorization': `Bearer ${token}`
             }
@@ -25,10 +26,10 @@ export default function TodayHabit({ name, currentSequence, highestSequence, id,
 
     return (
         <StyledContainer>
-            <StyledLeft>
+            <StyledLeft isEqual={currentSequence === highestSequence} done={done} highestSequence={highestSequence}>
                 <h1>{name}</h1>
-                <h2>Sequência atual: {currentSequence} dias</h2>
-                <h2>Seu recorde: {highestSequence} dias</h2>
+                <h2>Sequência atual: <StyledActualDay>{currentSequence} dias</StyledActualDay></h2>
+                <h2>Seu recorde: <StyledRecordDay>{highestSequence} dias</StyledRecordDay></h2>
             </StyledLeft>
             <StyledRight>
                 <StyledCheckBox done={done} src={checkBox} onClick={onClick} />
@@ -36,6 +37,14 @@ export default function TodayHabit({ name, currentSequence, highestSequence, id,
         </StyledContainer>
     )
 }
+
+const StyledActualDay = styled.span`
+    color:red;
+`
+const StyledRecordDay = styled.span`
+    color:red;
+`
+
 
 const StyledCheckBox = styled.img`
     filter: ${props => props.done === true ? (
@@ -70,8 +79,19 @@ const StyledLeft = styled.div`
     }
     h2{
         margin-bottom: 2px;
-        font-size: 13px;
+        font-family: 'Lexend Deca';
+        font-style: normal;
+        font-weight: 400;
+        font-size: 12.976px;
+        line-height: 16px;
         color: #666666;
+    }
+
+    ${StyledActualDay}{
+        color: ${props => props.done ? '#8FC549' : '#666666'} ;
+    }
+    ${StyledRecordDay}{
+        color: ${props => props.isEqual && props.highestSequence !== 0 ? '#8FC549' : '#666666'} ;
     }
 
 `

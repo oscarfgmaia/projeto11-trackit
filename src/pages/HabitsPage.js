@@ -19,7 +19,6 @@ export default function HabitsPage() {
     const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NTk2OSwiaWF0IjoxNjY2MjA1MTkzfQ.LRHldZEEV5qM_kSKl4wcLBcGhJwAIiIHwWW_dPVke7s"
     const [habits, setHabits] = useState([])
     useEffect(() => {
-        document.body.style.backgroundColor="#E5E5E5";
         axios.get(`${BASE_URL}/habits`, {
             headers: {
                 'Authorization': `Bearer ${token}`

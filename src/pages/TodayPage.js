@@ -49,27 +49,28 @@ export default function TodayPage() {
 
     useEffect(() => {
         document.body.style.backgroundColor = "#E5E5E5";
-        function getData() {
-            axios.get(`${BASE_URL}/habits/today`, {
-                headers: {
-                    'Authorization': `Bearer ${token}`
-                }
-            })
-                .then(res => {
-                    setHabits(res.data);
-                    setStartPage(true);
-                })
-                .catch(err => {
-                    console.log(err.response.data.message)
-                })
-        }
-        getData()
-        console.log(habits)
-    }, [handleEffect])
 
-    function aumentarProgress() {
-        const newUser = { ...user, progress: 50 }
-        setUser(newUser)
+        axios.get(`${BASE_URL}/habits/today`, {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        })
+            .then(res => {
+                setHabits(res.data);
+                checkProgress(res.data)
+                setStartPage(true);
+            })
+            .catch(err => {
+                console.log(err.response.data.message)
+            })
+    }, [handleEffect,user])
+
+    function checkProgress(arr) {
+        const arrSize = arr.length
+        const arrFiltered = arr.filter((e) => { if (e.done === true) return true })
+        let progress = (arrFiltered.length/arrSize*100).toFixed()
+        const newUser = {...user,progress:progress}
+        setUser(newUser);
     }
 
     if (startPage === false) {
@@ -83,7 +84,7 @@ export default function TodayPage() {
                 <PagesBackground>
                     <StyledNewHabit>
                         <h1>{week}, {dayOfMonth}/{monthOfYear}</h1>
-                        <h2>Nenhum hábito concluído ainda</h2>
+                        <h3>Nenhum hábito concluído ainda</h3>
                     </StyledNewHabit>
                     <StyledText>
                         <h1>
@@ -102,7 +103,6 @@ export default function TodayPage() {
                     <StyledNewHabit>
                         <h1>{week}, {dayOfMonth}/{monthOfYear}</h1>
                         {habits.some(elem => elem.done === true) ? <h2>{user.progress}% dos hábitos concluídos</h2> : <h3> Nenhum hábito concluído ainda</h3>}
-                        <button onClick={aumentarProgress}>AUMENTAR PROGRESS</button>
                     </StyledNewHabit>
                     <StyledText>
                         {habits.map((e) => <TodayHabit

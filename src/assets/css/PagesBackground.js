@@ -5,6 +5,6 @@ const PagesBackground = styled.div`
     margin-bottom: 70px;
     padding: 0px 18px;
     padding-top: 22px;
-    padding-bottom: 81px;
+    padding-bottom: 31px;
 `
 export default PagesBackground;

@@ -1,14 +1,46 @@
-import axios from "axios";
-import { useContext } from "react";
 import Footer from "../components/Footer";
 import Header from "../components/Header";
-import { LoginContext } from "../Contexts/LoginContext";
-import { BASE_URL } from "../constants/urls"
+import PagesBackground from "../assets/css/PagesBackground";
+import styled from "styled-components";
+
 export default function HistoricPage() {
     return (
         <>
             <Header />
+            <PagesBackground>
+                <StyledNewHabit>
+                    <h1>Histórico</h1>
+                    <h2>
+                        Em breve você poderá ver o histórico dos seus hábitos aqui!
+                    </h2>
+                </StyledNewHabit>
+            </PagesBackground>
             <Footer />
         </>
     )
 }
+
+const StyledNewHabit = styled.div`
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 100%;
+    h1{
+        font-family: 'Lexend Deca';
+        font-style: normal;
+        font-weight: 400;
+        font-size: 22.976px;
+        line-height: 29px;
+        color: #126BA5;
+        margin-bottom: 17px;
+    }
+    h2{
+        font-family: 'Lexend Deca';
+        font-style: normal;
+        font-weight: 400;
+        font-size: 17.976px;
+        line-height: 22px;
+
+        color: #666666;
+    }
+`
