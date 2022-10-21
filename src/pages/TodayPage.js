@@ -11,7 +11,6 @@ import LoadingPage from "../components/LoadingPage"
 import TodayHabit from "../components/TodayHabits";
 export default function TodayPage() {
     const { user, setUser } = useContext(LoginContext);
-    const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NTk2OSwiaWF0IjoxNjY2MjA1MTkzfQ.LRHldZEEV5qM_kSKl4wcLBcGhJwAIiIHwWW_dPVke7s"
     const dayOfWeek = dayjs().day()
     const dayOfMonth = dayjs().date()
     const monthOfYear = dayjs().month() + 1 // months goes from 0 to 11
@@ -72,7 +71,6 @@ export default function TodayPage() {
         const newUser = {...user,progress:progress}
         setUser(newUser);
     }
-
     if (startPage === false) {
         return <LoadingPage />
     }

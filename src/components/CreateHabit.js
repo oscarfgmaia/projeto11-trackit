@@ -8,7 +8,6 @@ import { LoginContext } from "../Contexts/LoginContext";
 
 export default function CreateHabit({ setCreateHabitBtn }) {
     const { user,setUser} = useContext(LoginContext)
-    const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NTk2OSwiaWF0IjoxNjY2MjA1MTkzfQ.LRHldZEEV5qM_kSKl4wcLBcGhJwAIiIHwWW_dPVke7s"
     const [days, setDays] = useState([
         { value: 0, day: 'D', clicked: false },
         { value: 1, day: 'S', clicked: false },

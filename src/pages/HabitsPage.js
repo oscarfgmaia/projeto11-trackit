@@ -16,7 +16,6 @@ export default function HabitsPage() {
     const [createHabitBtn, setCreateHabitBtn] = useState(false)
     const { user } = useContext(LoginContext);
     const [handleUseEffect, setHandleUseEffect] = useState(true)
-    const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NTk2OSwiaWF0IjoxNjY2MjA1MTkzfQ.LRHldZEEV5qM_kSKl4wcLBcGhJwAIiIHwWW_dPVke7s"
     const [habits, setHabits] = useState([])
     useEffect(() => {
         axios.get(`${BASE_URL}/habits`, {

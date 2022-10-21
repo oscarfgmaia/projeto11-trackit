@@ -8,7 +8,6 @@ import { LoginContext } from "../Contexts/LoginContext"
 export default function TodayHabit({ name, currentSequence, highestSequence, id, done, handleEffect, setHandleEffect }) {
     const { user } = useContext(LoginContext);
 
-    const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NTk2OSwiaWF0IjoxNjY2MjA1MTkzfQ.LRHldZEEV5qM_kSKl4wcLBcGhJwAIiIHwWW_dPVke7s"
 
     function onClick() {
         axios.post(`${BASE_URL}/habits/${id}/check`, {}, {

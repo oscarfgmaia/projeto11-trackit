@@ -10,7 +10,7 @@ export default function Footer() {
     useEffect(() => {
         console.log(user)
         setPercentage(user.progress)
-    }, [user])
+    },[])
 
     return (
         <StyledFooter>

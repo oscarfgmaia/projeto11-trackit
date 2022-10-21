@@ -8,7 +8,6 @@ import { LoginContext } from "../Contexts/LoginContext";
 
 export default function Habit({ name, days, id, setHandleUseEffect, handleUseEffect }) {
     const { user } = useContext(LoginContext);
-    const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NTk2OSwiaWF0IjoxNjY2MjA1MTkzfQ.LRHldZEEV5qM_kSKl4wcLBcGhJwAIiIHwWW_dPVke7s"
 
     function deleteHabit() {
         if (window.confirm("Você têm certeza que deseja excluir esse hábito?") == true) {
