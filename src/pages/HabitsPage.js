@@ -21,7 +21,7 @@ export default function HabitsPage() {
     useEffect(() => {
         axios.get(`${BASE_URL}/habits`, {
             headers: {
-                'Authorization': `Bearer ${token}`
+                'Authorization': `Bearer ${user.token}`
             }
         })
             .then(res => {

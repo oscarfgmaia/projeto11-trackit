@@ -13,7 +13,7 @@ export default function TodayHabit({ name, currentSequence, highestSequence, id,
     function onClick() {
         axios.post(`${BASE_URL}/habits/${id}/check`, {}, {
             headers: {
-                'Authorization': `Bearer ${token}`
+                'Authorization': `Bearer ${user.token}`
             }
         })
             .then(res => {

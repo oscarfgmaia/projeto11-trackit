@@ -40,7 +40,7 @@ export default function CreateHabit({ setCreateHabitBtn }) {
 
             axios.post(`${BASE_URL}/habits`, form, {
                 headers: {
-                    'Authorization': `Bearer ${token}`
+                    'Authorization': `Bearer ${user.token}`
                 }
             })
                 .then(res => {

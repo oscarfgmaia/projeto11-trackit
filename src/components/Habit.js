@@ -15,7 +15,7 @@ export default function Habit({ name, days, id, setHandleUseEffect, handleUseEff
 
             axios.delete(`${BASE_URL}/habits/${id}`, {
                 headers: {
-                    Authorization: `Bearer ${token}`
+                    Authorization: `Bearer ${user.token}`
                 }
             })
                 .then(res => {

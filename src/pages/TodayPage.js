@@ -52,7 +52,7 @@ export default function TodayPage() {
 
         axios.get(`${BASE_URL}/habits/today`, {
             headers: {
-                'Authorization': `Bearer ${token}`
+                'Authorization': `Bearer ${user.token}`
             }
         })
             .then(res => {
