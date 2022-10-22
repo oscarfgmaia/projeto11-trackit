@@ -5,10 +5,8 @@ import styled from "styled-components"
 import ButtonDay from "./ButtonDay";
 import { BASE_URL } from "../constants/urls"
 import { LoginContext } from "../Contexts/LoginContext";
-import { AllHabitsContext } from "../Contexts/AllHabitsContext";
 
 export default function CreateHabit({ setCreateHabitBtn }) {
-    const {allHabits, setAllHabits} = useContext(AllHabitsContext)
     const { user, setUser } = useContext(LoginContext)
     const [days, setDays] = useState([
         { value: 0, day: 'D', clicked: false },

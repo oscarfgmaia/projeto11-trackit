@@ -9,15 +9,12 @@ import { LoginContext } from "../Contexts/LoginContext";
 import CreateHabit from "../components/CreateHabit";
 import LoadingPage from "../components/LoadingPage";
 import Habit from "../components/Habit";
-import { AllHabitsContext } from "../Contexts/AllHabitsContext";
-
 
 
 export default function HabitsPage({}) {
     const [start, setStart] = useState(false)
     const [createHabitBtn, setCreateHabitBtn] = useState(false)
     const { user, setUser } = useContext(LoginContext);
-    const {allHabits, setAllHabits} = useContext(AllHabitsContext)
     const [habits, setHabits] = useState([])
 
     useEffect(() => {
@@ -30,12 +27,14 @@ export default function HabitsPage({}) {
             .then(res => {
                 setStart(true);
                 setHabits(res.data)
-                setUser({...user,change:!user.change})
+                const newUser = {...user}
+                newUser.allHabits = res.data.length;
+                setUser(newUser)
             })
             .catch(err => {
                 console.log(err.response.data)
             })
-    }, [createHabitBtn])
+    }, [user.change])
 
 
     if (start === false) {
@@ -46,7 +45,7 @@ export default function HabitsPage({}) {
         setCreateHabitBtn(!createHabitBtn)
     }
 
-    if (allHabits.length === 0) {
+    if (user.allHabits === 0) {
         return (
             <>
                 <Header />

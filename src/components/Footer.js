@@ -4,16 +4,14 @@ import { CircularProgressbarWithChildren, buildStyles } from 'react-circular-pro
 import { useContext, useEffect, useState } from "react";
 import { LoginContext } from "../Contexts/LoginContext";
 import 'react-circular-progressbar/dist/styles.css';
-import { AllHabitsContext } from "../Contexts/AllHabitsContext";
 
 export default function Footer() {
     const { user,setUser } = useContext(LoginContext)
-    const {allHabits} = useContext(AllHabitsContext)
     const [percentage, setPercentage] = useState(0)
     useEffect(() => {
-        console.log("DENTRO DO FOOTER")
+        console.log(`Qtd Total Habits: ${user.allHabits} / Qtd Total todayHabits: ${user.todayHabits} / Qtd Total todayHabitsDone: ${user.todayHabitsDone}`)
         setPercentage(user.progress)
-    }, [allHabits])
+    }, [user])
 
     if (percentage === null) {
         return <h1>ERROR - PORCENTAGEM NÃO CARREGOU</h1>
@@ -24,7 +22,7 @@ export default function Footer() {
                 <Link to={'/habitos'}>
                     <HabitContainer>
                         <h1>Hábitos</h1>
-                        <h2>{allHabits.size}</h2>
+                        <h2>{user.allHabits}</h2>
                     </HabitContainer>
                 </Link>
                 <Link to={'/hoje'}>

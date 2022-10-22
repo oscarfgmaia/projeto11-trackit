@@ -3,7 +3,6 @@ import styled from "styled-components";
 import { LoginContext } from "../Contexts/LoginContext";
 
 export default function Header(){
-    console.log("Oscar Aqui :) pc fábrica")
     const {user} = useContext(LoginContext)
     return(
         <StyledHeader>

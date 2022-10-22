@@ -5,11 +5,9 @@ import trash from "../assets/imgs/trash.svg"
 import axios from "axios";
 import { BASE_URL } from "../constants/urls";
 import { LoginContext } from "../Contexts/LoginContext";
-import { AllHabitsContext } from "../Contexts/AllHabitsContext";
 
 export default function Habit({ name, days, id}) {
     const { user,setUser } = useContext(LoginContext);
-    const {allHabits, setAllHabits} = useContext(AllHabitsContext)
     function deleteHabit() {
         if (window.confirm("Você têm certeza que deseja excluir esse hábito?") === true) {
 

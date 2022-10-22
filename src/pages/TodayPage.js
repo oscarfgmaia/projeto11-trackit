@@ -9,7 +9,6 @@ import { BASE_URL } from "../constants/urls"
 import * as dayjs from "dayjs";
 import LoadingPage from "../components/LoadingPage"
 import TodayHabit from "../components/TodayHabits";
-import { AllHabitsContext } from "../Contexts/AllHabitsContext";
 export default function TodayPage() {
     const { user, setUser } = useContext(LoginContext);
     const dayOfWeek = dayjs().day()
@@ -17,7 +16,6 @@ export default function TodayPage() {
     const monthOfYear = dayjs().month() + 1 // months goes from 0 to 11
     const [todayHabits, setTodayHabits] = useState([])
     const [startPage, setStartPage] = useState(false)
-    const {allHabits, setAllHabits} = useContext(AllHabitsContext)
     let week = undefined;
     switch (dayOfWeek) {
         case 0:
@@ -55,17 +53,21 @@ export default function TodayPage() {
             }
         })
             .then(res => {
-                setUser({...user,change:!user.change})
+                const newUser = {...user}
+                newUser.todayHabits = res.data.length;
+                newUser.todayHabitsDone = res.data.filter((e)=>e.done).length
+                console.log(res.data.length)
+                setUser(newUser)
                 setTodayHabits(res.data);
                 setStartPage(true);
-                checkProgress(res.data)
+                //checkProgress(res.data)
             })
             .catch(err => {
                 console.log(err.response.data.message)
             })
-    }, [allHabits])
+    }, [])
 
-    
+    /*
     function checkProgress(arr) {
         const arrSize = arr.length
         const arrFiltered = arr.filter((e) => { if (e.done === true) return true })
@@ -73,6 +75,7 @@ export default function TodayPage() {
         const newUser = {...user,progress:progress}
         setUser(newUser);
     }
+*/
     if (startPage === false) {
         return <LoadingPage />
     }
