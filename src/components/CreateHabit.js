@@ -5,9 +5,11 @@ import styled from "styled-components"
 import ButtonDay from "./ButtonDay";
 import { BASE_URL } from "../constants/urls"
 import { LoginContext } from "../Contexts/LoginContext";
+import { AllHabitsContext } from "../Contexts/AllHabitsContext";
 
 export default function CreateHabit({ setCreateHabitBtn }) {
-    const { user,setUser} = useContext(LoginContext)
+    const {allHabits, setAllHabits} = useContext(AllHabitsContext)
+    const { user, setUser } = useContext(LoginContext)
     const [days, setDays] = useState([
         { value: 0, day: 'D', clicked: false },
         { value: 1, day: 'S', clicked: false },
@@ -43,19 +45,18 @@ export default function CreateHabit({ setCreateHabitBtn }) {
                 }
             })
                 .then(res => {
-                    console.log(res.data)
                     setDisabledSwitch(false)
                     setNotDisabledSwitch(true)
                     setCreateHabitBtn(false)
+                    setUser({...user,change:!user.change})
                 })
                 .catch(err => {
-                    console.log(err.response.data.message)
+                    console.log(err.response)
                     setDisabledSwitch(false)
                     setNotDisabledSwitch(true)
                 })
         }
     }
-
 
     return (
         <CreateHabitContainer>

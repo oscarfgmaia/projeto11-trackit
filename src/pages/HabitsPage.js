@@ -9,15 +9,19 @@ import { LoginContext } from "../Contexts/LoginContext";
 import CreateHabit from "../components/CreateHabit";
 import LoadingPage from "../components/LoadingPage";
 import Habit from "../components/Habit";
+import { AllHabitsContext } from "../Contexts/AllHabitsContext";
 
 
-export default function HabitsPage() {
+
+export default function HabitsPage({}) {
     const [start, setStart] = useState(false)
     const [createHabitBtn, setCreateHabitBtn] = useState(false)
-    const { user } = useContext(LoginContext);
-    const [handleUseEffect, setHandleUseEffect] = useState(true)
+    const { user, setUser } = useContext(LoginContext);
+    const {allHabits, setAllHabits} = useContext(AllHabitsContext)
     const [habits, setHabits] = useState([])
+
     useEffect(() => {
+        console.log("DENTRO DO HABITS PAGE")
         axios.get(`${BASE_URL}/habits`, {
             headers: {
                 'Authorization': `Bearer ${user.token}`
@@ -26,11 +30,13 @@ export default function HabitsPage() {
             .then(res => {
                 setStart(true);
                 setHabits(res.data)
+                setUser({...user,change:!user.change})
             })
             .catch(err => {
                 console.log(err.response.data)
             })
-    }, [createHabitBtn, handleUseEffect])
+    }, [createHabitBtn])
+
 
     if (start === false) {
         return <LoadingPage />
@@ -40,7 +46,7 @@ export default function HabitsPage() {
         setCreateHabitBtn(!createHabitBtn)
     }
 
-    if (habits.length === 0) {
+    if (allHabits.length === 0) {
         return (
             <>
                 <Header />
@@ -48,8 +54,9 @@ export default function HabitsPage() {
                     <StyledNewHabit>
                         <h1>Meus Hábitos</h1>
                         <button onClick={createHabit}>+</button>
+                        
                     </StyledNewHabit>
-                    {createHabitBtn && <CreateHabit setCreateHabitBtn={setCreateHabitBtn} />}
+                    {createHabitBtn && <CreateHabit setCreateHabitBtn={setCreateHabitBtn}/>}
                     <StyledText>
                         <h1>
                             Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para começar a trackear!
@@ -73,8 +80,6 @@ export default function HabitsPage() {
                     <StyledText>
                         {habits.map((e) =>
                             <Habit
-                                handleUseEffect={handleUseEffect}
-                                setHandleUseEffect={setHandleUseEffect}
                                 key={e.id}
                                 id={e.id}
                                 name={e.name}

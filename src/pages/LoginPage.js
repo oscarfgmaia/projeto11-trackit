@@ -6,8 +6,10 @@ import { useContext, useEffect, useState } from "react"
 import { BASE_URL } from "../constants/urls"
 import axios from "axios"
 import { LoginContext } from "../Contexts/LoginContext"
+import { AllHabitsContext } from "../Contexts/AllHabitsContext"
 
 export default function LoginPage() {
+    const {allHabits, setAllHabits} = useContext(AllHabitsContext)
     const navigate = useNavigate()
     const [disabledSwitch, setDisabledSwitch] = useState(false);
     const [notDisabledSwitch, setNotDisabledSwitch] = useState(true);
@@ -15,8 +17,9 @@ export default function LoginPage() {
     const {user,setUser} = useContext(LoginContext);
 
     useEffect(()=>{
+        console.log(`LOGIN PAGE - allHabits ${allHabits.size}`)
         document.body.style.backgroundColor="white";
-    },[])
+    },[allHabits])
 
     function login(e) {
         e.preventDefault();

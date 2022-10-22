@@ -4,44 +4,54 @@ import { CircularProgressbarWithChildren, buildStyles } from 'react-circular-pro
 import { useContext, useEffect, useState } from "react";
 import { LoginContext } from "../Contexts/LoginContext";
 import 'react-circular-progressbar/dist/styles.css';
+import { AllHabitsContext } from "../Contexts/AllHabitsContext";
+
 export default function Footer() {
-    const { user } = useContext(LoginContext)
+    const { user,setUser } = useContext(LoginContext)
+    const {allHabits} = useContext(AllHabitsContext)
     const [percentage, setPercentage] = useState(0)
     useEffect(() => {
-        console.log(user)
+        console.log("DENTRO DO FOOTER")
         setPercentage(user.progress)
-    },[])
+    }, [allHabits])
 
-    return (
-        <StyledFooter>
-            <Link to={'/habitos'}>
-                <HabitContainer>
-                    <h1>Hábitos</h1>
-                </HabitContainer>
-            </Link>
-            <Link to={'/hoje'}>
-                <CircularProgressContainer>
-                    <CircularProgressbarWithChildren
-                        value={percentage}
-                        text={'Hoje'}
-                        background
-                        backgroundPadding={6}
-                        styles={buildStyles({
-                            backgroundColor: "#52B6FF",
-                            textColor: "#fff",
-                            pathColor: "#fff",
-                            trailColor: "transparent"
-                        })}
-                    />
-                </CircularProgressContainer>
-            </Link>
-            <Link to={'/historico'}>
-                <HistoricContainer>
-                    <h1>Histórico</h1>
-                </HistoricContainer>
-            </Link>
-        </StyledFooter>
-    )
+    if (percentage === null) {
+        return <h1>ERROR - PORCENTAGEM NÃO CARREGOU</h1>
+    }
+    else {
+        return (
+            <StyledFooter>
+                <Link to={'/habitos'}>
+                    <HabitContainer>
+                        <h1>Hábitos</h1>
+                        <h2>{allHabits.size}</h2>
+                    </HabitContainer>
+                </Link>
+                <Link to={'/hoje'}>
+                    <CircularProgressContainer>
+                        <CircularProgressbarWithChildren
+                            value={percentage}
+                            text={'Hoje'}
+                            background
+                            backgroundPadding={6}
+                            styles={buildStyles({
+                                backgroundColor: "#52B6FF",
+                                textColor: "#fff",
+                                pathColor: "#fff",
+                                trailColor: "transparent"
+                            })}
+                        />
+                    </CircularProgressContainer>
+                </Link>
+                <Link to={'/historico'}>
+                    <HistoricContainer>
+                        <h1>Histórico</h1>
+                    </HistoricContainer>
+                </Link>
+            </StyledFooter>
+        )
+    }
+
 }
 
 

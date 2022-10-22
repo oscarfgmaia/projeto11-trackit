@@ -1,14 +1,13 @@
 import axios from "axios"
-import { useContext, useState } from "react"
+import { useContext, useEffect, useState } from "react"
 import styled from "styled-components"
 import checkBox from "../assets/imgs/checkbox.svg"
 import { BASE_URL } from "../constants/urls"
 import { LoginContext } from "../Contexts/LoginContext"
 
-export default function TodayHabit({ name, currentSequence, highestSequence, id, done, handleEffect, setHandleEffect }) {
-    const { user } = useContext(LoginContext);
-
-
+export default function TodayHabit({ name, currentSequence, highestSequence, id, done}) {
+    const { user, setUser } = useContext(LoginContext);
+    
     function onClick() {
         axios.post(`${BASE_URL}/habits/${id}/check`, {}, {
             headers: {
@@ -16,7 +15,7 @@ export default function TodayHabit({ name, currentSequence, highestSequence, id,
             }
         })
             .then(res => {
-                setHandleEffect(!handleEffect)
+                setUser({...user,change:!user.change})
             })
             .catch(err => {
                 console.log(err.response.data.message)
@@ -43,7 +42,6 @@ const StyledActualDay = styled.span`
 const StyledRecordDay = styled.span`
     color:red;
 `
-
 
 const StyledCheckBox = styled.img`
     filter: ${props => props.done === true ? (

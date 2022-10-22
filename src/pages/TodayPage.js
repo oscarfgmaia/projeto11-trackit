@@ -9,15 +9,15 @@ import { BASE_URL } from "../constants/urls"
 import * as dayjs from "dayjs";
 import LoadingPage from "../components/LoadingPage"
 import TodayHabit from "../components/TodayHabits";
+import { AllHabitsContext } from "../Contexts/AllHabitsContext";
 export default function TodayPage() {
     const { user, setUser } = useContext(LoginContext);
     const dayOfWeek = dayjs().day()
     const dayOfMonth = dayjs().date()
     const monthOfYear = dayjs().month() + 1 // months goes from 0 to 11
-    const [habits, setHabits] = useState([])
+    const [todayHabits, setTodayHabits] = useState([])
     const [startPage, setStartPage] = useState(false)
-    const [handleEffect, setHandleEffect] = useState(false)
-
+    const {allHabits, setAllHabits} = useContext(AllHabitsContext)
     let week = undefined;
     switch (dayOfWeek) {
         case 0:
@@ -47,23 +47,25 @@ export default function TodayPage() {
     }
 
     useEffect(() => {
+        console.log("DENTRO DA TODAY PAGE")
         document.body.style.backgroundColor = "#E5E5E5";
-
         axios.get(`${BASE_URL}/habits/today`, {
             headers: {
                 'Authorization': `Bearer ${user.token}`
             }
         })
             .then(res => {
-                setHabits(res.data);
-                checkProgress(res.data)
+                setUser({...user,change:!user.change})
+                setTodayHabits(res.data);
                 setStartPage(true);
+                checkProgress(res.data)
             })
             .catch(err => {
                 console.log(err.response.data.message)
             })
-    }, [handleEffect,user])
+    }, [allHabits])
 
+    
     function checkProgress(arr) {
         const arrSize = arr.length
         const arrFiltered = arr.filter((e) => { if (e.done === true) return true })
@@ -75,7 +77,7 @@ export default function TodayPage() {
         return <LoadingPage />
     }
 
-    if (habits.length === 0) {
+    if (todayHabits.length === 0) {
         return (
             <>
                 <Header />
@@ -100,22 +102,20 @@ export default function TodayPage() {
                 <PagesBackground>
                     <StyledNewHabit>
                         <h1>{week}, {dayOfMonth}/{monthOfYear}</h1>
-                        {habits.some(elem => elem.done === true) ? <h2>{user.progress}% dos hábitos concluídos</h2> : <h3> Nenhum hábito concluído ainda</h3>}
+                        {todayHabits.some(elem => elem.done === true) ? <h2>{user.progress}% dos hábitos concluídos</h2> : <h3> Nenhum hábito concluído ainda</h3>}
                     </StyledNewHabit>
                     <StyledText>
-                        {habits.map((e) => <TodayHabit
+                        {todayHabits.map((e) => <TodayHabit
                             key={e.id}
                             id={e.id}
                             name={e.name}
                             done={e.done}
-                            handleEffect={handleEffect}
-                            setHandleEffect={setHandleEffect}
                             currentSequence={e.currentSequence}
                             highestSequence={e.highestSequence}
                         />)}
                     </StyledText>
                 </PagesBackground>
-                <Footer />
+                <Footer/>
             </>
         )
     }
