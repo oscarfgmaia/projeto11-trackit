@@ -23,7 +23,6 @@ export default function LoginPage() {
             .then(res => {
                 setDisabledSwitch(false)
                 setNotDisabledSwitch(true)
-                console.log(res.data)
                 const newUser = res.data
                 newUser.token = res.data.token
                 newUser.image = res.data.image
