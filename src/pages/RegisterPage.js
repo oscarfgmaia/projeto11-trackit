@@ -1,7 +1,7 @@
 import { Link, useNavigate } from "react-router-dom"
 import styled from "styled-components"
 import logo from "../assets/imgs/logo.png"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { ThreeDots } from 'react-loader-spinner'
 import axios from "axios"
 import { BASE_URL } from "../constants/urls"
@@ -12,6 +12,10 @@ export default function RegisterPage() {
     const [notDisabledSwitch, setNotDisabledSwitch] = useState(!disabledSwitch);
     const [form, setForm] = useState({ email: '', name: '', image: '', password: '' });
 
+    useEffect(() => {
+        document.body.style.backgroundColor = "white";
+    }, [])
+    
     function register(e) {
         e.preventDefault();
         setDisabledSwitch(true)
@@ -28,7 +32,7 @@ export default function RegisterPage() {
                 setNotDisabledSwitch(true)
             })
     }
-    
+
     function handleChange(e) {
         setForm({ ...form, [e.target.name]: e.target.value });
     }

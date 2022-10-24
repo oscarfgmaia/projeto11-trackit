@@ -11,7 +11,7 @@ import LoadingPage from "../components/LoadingPage";
 import Habit from "../components/Habit";
 
 
-export default function HabitsPage({}) {
+export default function HabitsPage({ }) {
     const [start, setStart] = useState(false)
     const [createHabitBtn, setCreateHabitBtn] = useState(false)
     const { user, setUser } = useContext(LoginContext);
@@ -26,7 +26,9 @@ export default function HabitsPage({}) {
         { value: 5, day: 'S', clicked: false },
         { value: 6, day: 'S', clicked: false },
     ]);
+
     useEffect(() => {
+        document.body.style.backgroundColor = "#E5E5E5";
         axios.get(`${BASE_URL}/habits`, {
             headers: {
                 'Authorization': `Bearer ${user.token}`
@@ -35,12 +37,12 @@ export default function HabitsPage({}) {
             .then(res => {
                 setStart(true);
                 setHabits(res.data)
-                const newUser = {...user}
+                const newUser = { ...user }
                 user.allHabits = res.data.length;
                 setUser(user)
             })
             .catch(err => {
-                alert(err.response.data)
+                alert(err.response.data.message)
             })
     }, [user.change])
 
@@ -61,9 +63,9 @@ export default function HabitsPage({}) {
                     <StyledNewHabit>
                         <h1>Meus Hábitos</h1>
                         <button onClick={createHabit}>+</button>
-                        
+
                     </StyledNewHabit>
-                    {createHabitBtn && <CreateHabit setCreateHabitBtn={setCreateHabitBtn} form={form} setForm={setForm} days={days} setDays={setDays}/>}
+                    {createHabitBtn && <CreateHabit setCreateHabitBtn={setCreateHabitBtn} form={form} setForm={setForm} days={days} setDays={setDays} />}
                     <StyledText>
                         <h1>
                             Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para começar a trackear!
@@ -83,7 +85,7 @@ export default function HabitsPage({}) {
                         <h1>Meus Hábitos</h1>
                         <button onClick={createHabit}>+</button>
                     </StyledNewHabit>
-                    {createHabitBtn && <CreateHabit setCreateHabitBtn={setCreateHabitBtn} form={form} setForm={setForm} days={days} setDays={setDays}/>}
+                    {createHabitBtn && <CreateHabit setCreateHabitBtn={setCreateHabitBtn} form={form} setForm={setForm} days={days} setDays={setDays} />}
 
                     <StyledText>
                         {habits.map((e) =>

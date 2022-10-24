@@ -2,8 +2,12 @@ import Footer from "../components/Footer";
 import Header from "../components/Header";
 import PagesBackground from "../assets/css/PagesBackground";
 import styled from "styled-components";
+import { useEffect } from "react";
 
 export default function HistoricPage() {
+    useEffect(()=>{
+        document.body.style.backgroundColor = "#E5E5E5";
+    },[])
     return (
         <>
             <Header />
