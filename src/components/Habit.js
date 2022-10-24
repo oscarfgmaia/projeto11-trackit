@@ -62,6 +62,7 @@ align-items: flex-start;
 justify-content: space-between;
 width: 100%;
 h1{
+    word-break: break-all;
     font-size: 20px;
 }
 `
@@ -77,6 +78,7 @@ const StyledContainer = styled.div`
     justify-content: center;
     align-items: flex-start;
     box-sizing: border-box;
+    border-radius: 5px;
     padding: 10px;
     background-color: white;
     width: 100%;

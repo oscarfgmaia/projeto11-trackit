@@ -61,12 +61,12 @@ export default function TodayPage() {
             })
     }, [user.change])
 
-    
+
     function checkProgress(arr) {
         const arrSize = arr.length
         const arrFiltered = arr.filter((e) => { if (e.done === true) return true })
-        let progress = (arrFiltered.length/arrSize*100).toFixed()
-        const newUser = {...user,progress:progress}
+        let progress = (arrFiltered.length / arrSize * 100).toFixed()
+        const newUser = { ...user, progress: progress }
         setUser(newUser);
     }
 
@@ -112,7 +112,7 @@ export default function TodayPage() {
                         />)}
                     </StyledText>
                 </PagesBackground>
-                <Footer/>
+                <Footer />
             </>
         )
     }

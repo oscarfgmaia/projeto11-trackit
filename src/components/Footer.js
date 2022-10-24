@@ -4,11 +4,9 @@ import { CircularProgressbarWithChildren, buildStyles } from 'react-circular-pro
 import { useContext, useEffect, useState } from "react";
 import { LoginContext } from "../Contexts/LoginContext";
 import 'react-circular-progressbar/dist/styles.css';
-import axios from "axios";
-import { BASE_URL } from "../constants/urls";
 
 export default function Footer() {
-    const { user,setUser } = useContext(LoginContext)
+    const { user } = useContext(LoginContext)
     const [percentage, setPercentage] = useState(0)
     useEffect(() => {
         setPercentage(user.progress)

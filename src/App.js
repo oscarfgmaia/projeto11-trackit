@@ -17,9 +17,6 @@ export default function App() {
     password: null,
     token: null,
     progess: null,
-    todayHabits: null,
-    todayHabitsDone: null,
-    allHabits: 0,
     change: false
   })
   

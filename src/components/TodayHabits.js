@@ -94,6 +94,7 @@ const StyledLeft = styled.div`
         margin-bottom: 5px;
         font-size: 20px;
         color: #666666;
+        word-break: break-all;
     }
     h2{
         margin-bottom: 2px;

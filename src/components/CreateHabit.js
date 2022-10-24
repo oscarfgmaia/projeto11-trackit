@@ -62,7 +62,7 @@ export default function CreateHabit({ setCreateHabitBtn, form, setForm, days, se
         <CreateHabitContainer>
             <TitleContainer>
                 <form onSubmit={onSubmit}>
-                    <input name='name' onChange={handleChange} value={form.name} type='text' placeholder="nome do hábito" required disabled={disabledSwitch} />
+                    <input name='name' onChange={handleChange} value={form.name} type='text' placeholder="nome do hábito" maxLength="40" required disabled={disabledSwitch} />
                     <ButtonsContainer>
                         {days.map((d) =>
                             <ButtonDay
