@@ -20,7 +20,6 @@ export default function RegisterPage() {
             .then(res => {
                 setDisabledSwitch(false)
                 setNotDisabledSwitch(true)
-                console.log(res.data);
                 navigate('/')
             })
             .catch(err => {

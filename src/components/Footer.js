@@ -11,7 +11,6 @@ export default function Footer() {
     const { user,setUser } = useContext(LoginContext)
     const [percentage, setPercentage] = useState(0)
     useEffect(() => {
-        console.log(` USER CHANGE: ${user.change} / Qtd Total Habits: ${user.allHabits} / Qtd Total todayHabits: ${user.todayHabits} / Qtd Total todayHabitsDone: ${user.todayHabitsDone}`)
         setPercentage(user.progress)
 
     }, [user])
@@ -97,7 +96,6 @@ const CircularProgressContainer = styled.div`
     align-items: center;
     width: 91px;
     height: 91px;
-    display: flex;
     margin-bottom: 10px;
 `
 

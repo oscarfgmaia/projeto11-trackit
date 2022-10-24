@@ -20,7 +20,7 @@ export default function Habit({ name, days, id}) {
                     setUser({...user,change:!user.change})
                 })
                 .catch(err => {
-                    console.log(err.response.data.message)
+                    alert(err.response.data.message)
                 })
         }
     }

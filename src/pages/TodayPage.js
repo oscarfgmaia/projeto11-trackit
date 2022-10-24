@@ -45,7 +45,6 @@ export default function TodayPage() {
     }
 
     useEffect(() => {
-        console.log("DENTRO DA TODAY PAGE")
         document.body.style.backgroundColor = "#E5E5E5";
         axios.get(`${BASE_URL}/habits/today`, {
             headers: {
@@ -58,7 +57,7 @@ export default function TodayPage() {
                 setStartPage(true);
             })
             .catch(err => {
-                console.log(err.response.data.message)
+                alert(err.response.data.message)
             })
     }, [user.change])
 

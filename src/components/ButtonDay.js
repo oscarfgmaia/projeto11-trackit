@@ -14,7 +14,6 @@ export default function ButtonDay({ children, clicked, value, days, setDays, set
                 return true
             }
         })
-        newDays = newDays
         const onlyDaysNumbers = []
         for (let i = 0; i < newDays.length; i++) {
             onlyDaysNumbers.push(newDays[i].value)

@@ -6,20 +6,9 @@ import ButtonDay from "./ButtonDay";
 import { BASE_URL } from "../constants/urls"
 import { LoginContext } from "../Contexts/LoginContext";
 
-export default function CreateHabit({ setCreateHabitBtn, form, setForm }) {
-    console.log("INICIOU PROCESSO DE CRIAÇÃO DE HABIT!!")
+export default function CreateHabit({ setCreateHabitBtn, form, setForm, days, setDays }) {
     const { user, setUser } = useContext(LoginContext)
-    const [days, setDays] = useState([
-        { value: 0, day: 'D', clicked: false },
-        { value: 1, day: 'S', clicked: false },
-        { value: 2, day: 'T', clicked: false },
-        { value: 3, day: 'Q', clicked: false },
-        { value: 4, day: 'Q', clicked: false },
-        { value: 5, day: 'S', clicked: false },
-        { value: 6, day: 'S', clicked: false },
-    ]);
-    const [onlyDays, setOnlyDays] = useState([])
-    const [form, setForm] = useState({ name: '', days: onlyDays })
+
     const [disabledSwitch, setDisabledSwitch] = useState(false);
     const [notDisabledSwitch, setNotDisabledSwitch] = useState(true);
     function handleChange(e) {
@@ -47,10 +36,22 @@ export default function CreateHabit({ setCreateHabitBtn, form, setForm }) {
                     setDisabledSwitch(false)
                     setNotDisabledSwitch(true)
                     setCreateHabitBtn(false)
+                    setForm({ name: '', days: [] })
+                    setDays(
+                        [
+                            { value: 0, day: 'D', clicked: false },
+                            { value: 1, day: 'S', clicked: false },
+                            { value: 2, day: 'T', clicked: false },
+                            { value: 3, day: 'Q', clicked: false },
+                            { value: 4, day: 'Q', clicked: false },
+                            { value: 5, day: 'S', clicked: false },
+                            { value: 6, day: 'S', clicked: false },
+                        ]
+                    )
                     setUser({ ...user, change: !user.change })
                 })
                 .catch(err => {
-                    console.log(err.response)
+                    alert(err.response)
                     setDisabledSwitch(false)
                     setNotDisabledSwitch(true)
                 })

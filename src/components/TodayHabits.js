@@ -5,26 +5,43 @@ import checkBox from "../assets/imgs/checkbox.svg"
 import { BASE_URL } from "../constants/urls"
 import { LoginContext } from "../Contexts/LoginContext"
 
-export default function TodayHabit({ name, currentSequence, highestSequence, id, done}) {
+export default function TodayHabit({ name, currentSequence, highestSequence, id, done }) {
     const { user, setUser } = useContext(LoginContext);
-    
+
     function onClick() {
-        axios.post(`${BASE_URL}/habits/${id}/check`, {}, {
-            headers: {
-                'Authorization': `Bearer ${user.token}`
-            }
-        })
-            .then(res => {
-                const newUser = {...user}
-                newUser.change = !newUser.change
-                setUser(newUser)
+        if (done) {
+            axios.post(`${BASE_URL}/habits/${id}/uncheck`, {}, {
+                headers: {
+                    'Authorization': `Bearer ${user.token}`
+                }
             })
-            .catch(err => {
-                console.log(err.response.data.message)
+                .then(res => {
+                    const newUser = { ...user }
+                    newUser.change = !newUser.change
+                    setUser(newUser)
+                })
+                .catch(err => {
+                    alert(err.response.data.message)
+                })
+        } 
+        else {
+            axios.post(`${BASE_URL}/habits/${id}/check`, {}, {
+                headers: {
+                    'Authorization': `Bearer ${user.token}`
+                }
             })
+                .then(res => {
+                    const newUser = { ...user }
+                    newUser.change = !newUser.change
+                    setUser(newUser)
+                })
+                .catch(err => {
+                    alert(err.response.data.message)
+                })
+        }
     }
 
-    
+
 
     return (
         <StyledContainer>
