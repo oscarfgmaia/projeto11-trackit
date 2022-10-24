@@ -6,14 +6,12 @@ import { LoginContext } from "../Contexts/LoginContext";
 export default function Header(){
     const {user} = useContext(LoginContext)
     const navigate = useNavigate()
-    
     function logout(){
         if(window.confirm("Você têm certeza que quer deslogar?")){
             localStorage.clear()
             navigate('/')
         }
     }
-
     return(
         <StyledHeader>
             <h1 onClick={logout}>TrackIt</h1>

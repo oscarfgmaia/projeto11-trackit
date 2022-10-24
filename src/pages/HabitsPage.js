@@ -9,9 +9,11 @@ import { LoginContext } from "../Contexts/LoginContext";
 import CreateHabit from "../components/CreateHabit";
 import LoadingPage from "../components/LoadingPage";
 import Habit from "../components/Habit";
+import { useNavigate } from "react-router-dom";
 
 
 export default function HabitsPage({ }) {
+    const navigate = useNavigate()
     const [start, setStart] = useState(false)
     const [createHabitBtn, setCreateHabitBtn] = useState(false)
     const { user, setUser } = useContext(LoginContext);
@@ -29,21 +31,28 @@ export default function HabitsPage({ }) {
 
     useEffect(() => {
         document.body.style.backgroundColor = "#E5E5E5";
-        axios.get(`${BASE_URL}/habits`, {
-            headers: {
-                'Authorization': `Bearer ${user.token}`
-            }
-        })
-            .then(res => {
-                setStart(true);
-                setHabits(res.data)
-                const newUser = { ...user }
-                user.allHabits = res.data.length;
-                setUser(user)
+        if (localStorage.getItem('token')) {
+            user.token = localStorage.getItem('token')
+            user.image = localStorage.getItem('image')
+            axios.get(`${BASE_URL}/habits`, {
+                headers: {
+                    'Authorization': `Bearer ${user.token}`
+                }
             })
-            .catch(err => {
-                alert(err.response.data.message)
-            })
+                .then(res => {
+                    setStart(true);
+                    setHabits(res.data)
+                    const newUser = { ...user }
+                    user.allHabits = res.data.length;
+                    setUser(user)
+                })
+                .catch(err => {
+                    alert(err.response.data.message)
+                })
+        }
+        else{
+            navigate('/')
+        }
     }, [user.change])
 
 
