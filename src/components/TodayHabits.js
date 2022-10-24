@@ -46,12 +46,12 @@ export default function TodayHabit({ name, currentSequence, highestSequence, id,
     return (
         <StyledContainer>
             <StyledLeft isEqual={currentSequence === highestSequence} done={done} highestSequence={highestSequence}>
-                <h1>{name}</h1>
-                <h2>Sequência atual: <StyledActualDay>{currentSequence} dias</StyledActualDay></h2>
-                <h2>Seu recorde: <StyledRecordDay>{highestSequence} dias</StyledRecordDay></h2>
+                <h1 data-identifier="today-infos">{name}</h1>
+                <h2 data-identifier="today-infos">Sequência atual: <StyledActualDay>{currentSequence} dias</StyledActualDay></h2>
+                <h2 data-identifier="today-infos">Seu recorde: <StyledRecordDay>{highestSequence} dias</StyledRecordDay></h2>
             </StyledLeft>
             <StyledRight>
-                <StyledCheckBox done={done} src={checkBox} onClick={onClick} />
+                <StyledCheckBox data-identifier="done-habit-btn" done={done} src={checkBox} onClick={onClick} />
             </StyledRight>
         </StyledContainer>
     )

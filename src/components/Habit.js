@@ -38,8 +38,8 @@ export default function Habit({ name, days, id}) {
     return (
         <StyledContainer>
             <StyledTitle>
-                <h1>{name}</h1>
-                <img src={trash} onClick={deleteHabit} />
+                <h1 data-identifier="habit-name">{name}</h1>
+                <img data-identifier="delete-habit-btn" src={trash} onClick={deleteHabit} />
             </StyledTitle>
             <ButtonsContainer>
                 {defaultDays.map((d) =>

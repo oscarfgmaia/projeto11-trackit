@@ -41,16 +41,16 @@ export default function RegisterPage() {
         <RegisterContainer disable={disabledSwitch}>
             <img src={logo} alt="Logo" />
             <form onSubmit={register}>
-                <input name="email" value={form.email} onChange={handleChange} type="email" placeholder="email" required disabled={disabledSwitch} />
-                <input name="password" value={form.password} onChange={handleChange} type="password" placeholder="senha" required disabled={disabledSwitch} />
-                <input name="name" value={form.name} onChange={handleChange} type="text" placeholder="nome" required disabled={disabledSwitch} />
-                <input name="image" value={form.image} onChange={handleChange} type="text" placeholder="foto" required disabled={disabledSwitch} />
+                <input data-identifier="input-email" name="email" value={form.email} onChange={handleChange} type="email" placeholder="email" required disabled={disabledSwitch} />
+                <input data-identifier="input-password" name="password" value={form.password} onChange={handleChange} type="password" placeholder="senha" required disabled={disabledSwitch} />
+                <input data-identifier="input-name" name="name" value={form.name} onChange={handleChange} type="text" placeholder="nome" required disabled={disabledSwitch} />
+                <input data-identifier="input-photo" name="image" value={form.image} onChange={handleChange} type="text" placeholder="foto" required disabled={disabledSwitch} />
                 <button type="submit" disabled={disabledSwitch}>
                     <StyledButtonText visible={notDisabledSwitch}>Cadastrar</StyledButtonText>
                     <ThreeDots color="white" visible={disabledSwitch} />
                 </button>
             </form>
-            <Link to={'/'}><span>Já tem uma conta? Faça login!</span></Link>
+            <Link to={'/'}><span data-identifier="back-to-login-action">Já tem uma conta? Faça login!</span></Link>
         </RegisterContainer>
     )
 }

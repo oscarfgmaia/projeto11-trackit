@@ -62,12 +62,12 @@ export default function HabitsPage({ }) {
                 <PagesBackground>
                     <StyledNewHabit>
                         <h1>Meus Hábitos</h1>
-                        <button onClick={createHabit}>+</button>
+                        <button data-identifier="create-habit-btn" onClick={createHabit}>+</button>
 
                     </StyledNewHabit>
                     {createHabitBtn && <CreateHabit setCreateHabitBtn={setCreateHabitBtn} form={form} setForm={setForm} days={days} setDays={setDays} />}
                     <StyledText>
-                        <h1>
+                        <h1 data-identifier="no-habit-message">
                             Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para começar a trackear!
                         </h1>
                     </StyledText>
@@ -83,7 +83,7 @@ export default function HabitsPage({ }) {
                 <PagesBackground>
                     <StyledNewHabit>
                         <h1>Meus Hábitos</h1>
-                        <button onClick={createHabit}>+</button>
+                        <button data-identifier="create-habit-btn" onClick={createHabit}>+</button>
                     </StyledNewHabit>
                     {createHabitBtn && <CreateHabit setCreateHabitBtn={setCreateHabitBtn} form={form} setForm={setForm} days={days} setDays={setDays} />}
 

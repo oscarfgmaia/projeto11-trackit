@@ -12,7 +12,7 @@ export default function LoginPage() {
     const [disabledSwitch, setDisabledSwitch] = useState(false);
     const [notDisabledSwitch, setNotDisabledSwitch] = useState(true);
     const [form, setForm] = useState({ email: '', password: '' })
-    const {user,setUser} = useContext(LoginContext);
+    const {setUser} = useContext(LoginContext);
 
     useEffect(()=>{
         document.body.style.backgroundColor="white";
@@ -45,16 +45,16 @@ export default function LoginPage() {
         <LoginContainer disable={disabledSwitch}>
             <img src={logo} alt="Logo" />
             <form onSubmit={login}>
-                <input name="email" value={form.email} onChange={handleChange} type="email" placeholder="email" required disabled={disabledSwitch} />
-                <input name="password" value={form.password} onChange={handleChange} type="password" placeholder="senha" required disabled={disabledSwitch} />
-                <button disabled={disabledSwitch} type="submit">
+                <input data-identifier="input-email" name="email" value={form.email} onChange={handleChange} type="email" placeholder="email" required disabled={disabledSwitch} />
+                <input data-identifier="input-password" name="password" value={form.password} onChange={handleChange} type="password" placeholder="senha" required disabled={disabledSwitch} />
+                <button data-identifier="login-btn" disabled={disabledSwitch} type="submit">
                     <StyledButtonText visible={notDisabledSwitch}>
                         Entrar
                     </StyledButtonText>
                     <ThreeDots color="white" visible={disabledSwitch} />
                 </button>
             </form>
-            <Link to={"/cadastro"}><span>Não tem uma conta? Cadastre-se</span></Link>
+            <Link to={"/cadastro"}><span data-identifier="sign-up-action">Não tem uma conta? Cadastre-se</span></Link>
 
 
         </LoginContainer>

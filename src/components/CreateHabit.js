@@ -62,7 +62,7 @@ export default function CreateHabit({ setCreateHabitBtn, form, setForm, days, se
         <CreateHabitContainer>
             <TitleContainer>
                 <form onSubmit={onSubmit}>
-                    <input name='name' onChange={handleChange} value={form.name} type='text' placeholder="nome do hábito" maxLength="40" required disabled={disabledSwitch} />
+                    <input data-identifier="input-habit-name" name='name' onChange={handleChange} value={form.name} type='text' placeholder="nome do hábito" maxLength="40" required disabled={disabledSwitch} />
                     <ButtonsContainer>
                         {days.map((d) =>
                             <ButtonDay
@@ -79,9 +79,9 @@ export default function CreateHabit({ setCreateHabitBtn, form, setForm, days, se
                             </ButtonDay>)}
                     </ButtonsContainer>
                     <FinishHabitDiv>
-                        <StyledCancelButton type="button" onClick={() => setCreateHabitBtn(false)} disabled={disabledSwitch}>Cancelar</StyledCancelButton>
+                        <StyledCancelButton data-identifier="cancel-habit-create-btn" type="button" onClick={() => setCreateHabitBtn(false)} disabled={disabledSwitch}>Cancelar</StyledCancelButton>
                         <StyledButton disabled={disabledSwitch} type="submit">
-                            <StyledButtonText visible={notDisabledSwitch}>
+                            <StyledButtonText data-identifier="save-habit-create-btn" visible={notDisabledSwitch}>
                                 Salvar
                             </StyledButtonText>
                             <ThreeDots width={'50'} color="white" visible={disabledSwitch} />

@@ -7,7 +7,7 @@ export default function Header(){
     return(
         <StyledHeader>
             <h1>TrackIt</h1>
-            <img src={`${user.image}`} alt="Profile Pic"/>
+            <img data-identifier="avatar" src={`${user.image}`} alt="Profile Pic"/>
         </StyledHeader>
     )
 }

@@ -21,7 +21,7 @@ export default function Footer() {
             <StyledFooter>
                 <Link to={'/habitos'}>
                     <HabitContainer>
-                        <h1>Hábitos</h1>
+                        <h1 data-identifier="habit-page-action">Hábitos</h1>
                     </HabitContainer>
                 </Link>
                 <Link to={'/hoje'}>
@@ -42,7 +42,7 @@ export default function Footer() {
                 </Link>
                 <Link to={'/historico'}>
                     <HistoricContainer>
-                        <h1>Histórico</h1>
+                        <h1 data-identifier="historic-page-action">Histórico</h1>
                     </HistoricContainer>
                 </Link>
             </StyledFooter>

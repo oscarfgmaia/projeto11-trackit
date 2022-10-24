@@ -1,6 +1,6 @@
 import styled from "styled-components"
 
-export default function ButtonDay({ children, clicked, value, days, setDays, setForm, form, disabled }) {
+export default function ButtonDay({ children, clicked, value, days, setDays, setForm, form, disabled}) {
 
     function onClick() {
         const newArr = [...days]
@@ -24,7 +24,7 @@ export default function ButtonDay({ children, clicked, value, days, setDays, set
 
 
     return (
-        <StyledButton type="button" clicked={clicked} onClick={onClick} disabled={disabled}>{children}</StyledButton>
+        <StyledButton data-identifier={`week-day-btn`} type="button" clicked={clicked} onClick={onClick} disabled={disabled}>{children}</StyledButton>
     )
 }
 
