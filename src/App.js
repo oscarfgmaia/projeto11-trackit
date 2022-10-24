@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route} from "react-router-dom";
 import GlobalStyle from "./assets/css/GlobalStyle";
 import { LoginContext } from "./Contexts/LoginContext";
 import HabitsPage from "./pages/HabitsPage";
@@ -19,7 +19,7 @@ export default function App() {
     progess: null,
     change: false
   })
-  
+
   return (
     <BrowserRouter>
       <GlobalStyle />

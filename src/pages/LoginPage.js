@@ -12,35 +12,48 @@ export default function LoginPage() {
     const [disabledSwitch, setDisabledSwitch] = useState(false);
     const [notDisabledSwitch, setNotDisabledSwitch] = useState(true);
     const [form, setForm] = useState({ email: '', password: '' })
-    const {setUser} = useContext(LoginContext);
-
-    useEffect(()=>{
-        document.body.style.backgroundColor="white";
-    },[])
+    const { user, setUser } = useContext(LoginContext);
 
     function login(e) {
         e.preventDefault();
         setDisabledSwitch(true)
         setNotDisabledSwitch(false)
 
-        axios.post(`${BASE_URL}/auth/login`,form)
-        .then(res => {
-            setDisabledSwitch(false)
-            setNotDisabledSwitch(true)
-            setUser(res.data)
-            navigate('/hoje')
-        })
-        .catch(err => {
-            alert(err.response.data.message)
-            setDisabledSwitch(false)
-            setNotDisabledSwitch(true)
-        })
+        axios.post(`${BASE_URL}/auth/login`, form)
+            .then(res => {
+                setDisabledSwitch(false)
+                setNotDisabledSwitch(true)
+                console.log(res.data)
+                const newUser = res.data
+                newUser.token = res.data.token
+                newUser.image = res.data.image
+                localStorage.setItem("token", res.data.token)
+                localStorage.setItem("image", res.data.image)
+                setUser(newUser);
+                navigate('/hoje')
+            })
+            .catch(err => {
+                console.log(err.response)
+                setDisabledSwitch(false)
+                setNotDisabledSwitch(true)
+            })
     }
 
     function handleChange(e) {
         setForm({ ...form, [e.target.name]: e.target.value })
     }
-    
+
+    useEffect(() => {
+        document.body.style.backgroundColor = "white";
+        if (localStorage.getItem('token')) {
+            const newUser = { ...user }
+            newUser.token = localStorage.getItem('token')
+            newUser.image = localStorage.getItem('image')
+            setUser(newUser)
+            navigate('/hoje')
+        }
+    }, [])
+
     return (
         <LoginContainer disable={disabledSwitch}>
             <img src={logo} alt="Logo" />
@@ -55,10 +68,9 @@ export default function LoginPage() {
                 </button>
             </form>
             <Link to={"/cadastro"}><span data-identifier="sign-up-action">Não tem uma conta? Cadastre-se</span></Link>
-
-
         </LoginContainer>
     )
+
 }
 
 const LoginContainer = styled.div`

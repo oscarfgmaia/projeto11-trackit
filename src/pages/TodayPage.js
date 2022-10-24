@@ -9,13 +9,16 @@ import { BASE_URL } from "../constants/urls"
 import * as dayjs from "dayjs";
 import LoadingPage from "../components/LoadingPage"
 import TodayHabit from "../components/TodayHabits";
+import { useNavigate } from "react-router-dom";
 export default function TodayPage() {
+    const navigate = useNavigate()
     const { user, setUser } = useContext(LoginContext);
     const dayOfWeek = dayjs().day()
     const dayOfMonth = dayjs().date()
     const monthOfYear = dayjs().month() + 1 // months goes from 0 to 11
     const [todayHabits, setTodayHabits] = useState([])
     const [startPage, setStartPage] = useState(false)
+
     let week = undefined;
     switch (dayOfWeek) {
         case 0:
@@ -44,21 +47,30 @@ export default function TodayPage() {
             break;
     }
 
+
     useEffect(() => {
+        if (localStorage.getItem('token')) {
+            user.token = localStorage.getItem('token')
+            user.image = localStorage.getItem('image')
+            axios.get(`${BASE_URL}/habits/today`, {
+                headers: {
+                    'Authorization': `Bearer ${user.token}`
+                }
+            })
+                .then(res => {
+                    setTodayHabits(res.data);
+                    checkProgress(res.data)
+                    setStartPage(true);
+                })
+                .catch(err => {
+                    alert(err.response.data.message)
+                })
+        }
+        else {
+            navigate('/')
+        }
         document.body.style.backgroundColor = "#E5E5E5";
-        axios.get(`${BASE_URL}/habits/today`, {
-            headers: {
-                'Authorization': `Bearer ${user.token}`
-            }
-        })
-            .then(res => {
-                setTodayHabits(res.data);
-                checkProgress(res.data)
-                setStartPage(true);
-            })
-            .catch(err => {
-                alert(err.response.data.message)
-            })
+
     }, [user.change])
 
 

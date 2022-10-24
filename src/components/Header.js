@@ -1,12 +1,22 @@
 import { useContext } from "react";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { LoginContext } from "../Contexts/LoginContext";
 
 export default function Header(){
     const {user} = useContext(LoginContext)
+    const navigate = useNavigate()
+    
+    function logout(){
+        if(window.confirm("Você têm certeza que quer deslogar?")){
+            localStorage.clear()
+            navigate('/')
+        }
+    }
+
     return(
         <StyledHeader>
-            <h1>TrackIt</h1>
+            <h1 onClick={logout}>TrackIt</h1>
             <img data-identifier="avatar" src={`${user.image}`} alt="Profile Pic"/>
         </StyledHeader>
     )

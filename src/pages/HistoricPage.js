@@ -2,26 +2,47 @@ import Footer from "../components/Footer";
 import Header from "../components/Header";
 import PagesBackground from "../assets/css/PagesBackground";
 import styled from "styled-components";
-import { useEffect } from "react";
+import { useContext, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { LoginContext } from "../Contexts/LoginContext";
 
 export default function HistoricPage() {
-    useEffect(()=>{
+    const {user,setUser} = useContext(LoginContext)
+    const navigate = useNavigate()
+    useEffect(() => {
         document.body.style.backgroundColor = "#E5E5E5";
-    },[])
-    return (
-        <>
-            <Header />
-            <PagesBackground>
-                <StyledNewHabit>
-                    <h1>Histórico</h1>
-                    <h2>
-                        Em breve você poderá ver o histórico dos seus hábitos aqui!
-                    </h2>
-                </StyledNewHabit>
-            </PagesBackground>
-            <Footer />
-        </>
-    )
+        if (localStorage.getItem('token')) {
+            const newUser = {...user}
+            newUser.token = localStorage.getItem('token')
+            newUser.image = localStorage.getItem('image')
+            setUser(newUser)
+        }
+        else {
+            navigate('/')
+        }
+    }, [])
+
+    if (localStorage.getItem('token')) {
+        return (
+            <>
+                <Header />
+                <PagesBackground>
+                    <StyledNewHabit>
+                        <h1>Histórico</h1>
+                        <h2>
+                            Em breve você poderá ver o histórico dos seus hábitos aqui!
+                        </h2>
+                    </StyledNewHabit>
+                </PagesBackground>
+                <Footer />
+            </>
+        )
+    }
+
+    else {
+        console.log('false')
+        navigate('/')
+    }
 }
 
 const StyledNewHabit = styled.div`
