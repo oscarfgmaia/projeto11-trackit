@@ -19,7 +19,7 @@ export default function App() {
     progess: null,
     todayHabits: null,
     todayHabitsDone: null,
-    allHabits: null,
+    allHabits: 0,
     change: false
   })
   

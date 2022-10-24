@@ -6,7 +6,8 @@ import ButtonDay from "./ButtonDay";
 import { BASE_URL } from "../constants/urls"
 import { LoginContext } from "../Contexts/LoginContext";
 
-export default function CreateHabit({ setCreateHabitBtn }) {
+export default function CreateHabit({ setCreateHabitBtn, form, setForm }) {
+    console.log("INICIOU PROCESSO DE CRIAÇÃO DE HABIT!!")
     const { user, setUser } = useContext(LoginContext)
     const [days, setDays] = useState([
         { value: 0, day: 'D', clicked: false },
@@ -46,7 +47,7 @@ export default function CreateHabit({ setCreateHabitBtn }) {
                     setDisabledSwitch(false)
                     setNotDisabledSwitch(true)
                     setCreateHabitBtn(false)
-                    setUser({...user,change:!user.change})
+                    setUser({ ...user, change: !user.change })
                 })
                 .catch(err => {
                     console.log(err.response)

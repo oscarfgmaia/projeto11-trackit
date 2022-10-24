@@ -4,13 +4,16 @@ import { CircularProgressbarWithChildren, buildStyles } from 'react-circular-pro
 import { useContext, useEffect, useState } from "react";
 import { LoginContext } from "../Contexts/LoginContext";
 import 'react-circular-progressbar/dist/styles.css';
+import axios from "axios";
+import { BASE_URL } from "../constants/urls";
 
 export default function Footer() {
     const { user,setUser } = useContext(LoginContext)
     const [percentage, setPercentage] = useState(0)
     useEffect(() => {
-        console.log(`Qtd Total Habits: ${user.allHabits} / Qtd Total todayHabits: ${user.todayHabits} / Qtd Total todayHabitsDone: ${user.todayHabitsDone}`)
+        console.log(` USER CHANGE: ${user.change} / Qtd Total Habits: ${user.allHabits} / Qtd Total todayHabits: ${user.todayHabits} / Qtd Total todayHabitsDone: ${user.todayHabitsDone}`)
         setPercentage(user.progress)
+
     }, [user])
 
     if (percentage === null) {
@@ -22,7 +25,6 @@ export default function Footer() {
                 <Link to={'/habitos'}>
                     <HabitContainer>
                         <h1>Hábitos</h1>
-                        <h2>{user.allHabits}</h2>
                     </HabitContainer>
                 </Link>
                 <Link to={'/hoje'}>

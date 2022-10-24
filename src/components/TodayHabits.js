@@ -15,12 +15,16 @@ export default function TodayHabit({ name, currentSequence, highestSequence, id,
             }
         })
             .then(res => {
-                setUser({...user,change:!user.change})
+                const newUser = {...user}
+                newUser.change = !newUser.change
+                setUser(newUser)
             })
             .catch(err => {
                 console.log(err.response.data.message)
             })
     }
+
+    
 
     return (
         <StyledContainer>

@@ -16,7 +16,7 @@ export default function HabitsPage({}) {
     const [createHabitBtn, setCreateHabitBtn] = useState(false)
     const { user, setUser } = useContext(LoginContext);
     const [habits, setHabits] = useState([])
-
+    const [form, setForm] = useState({ name: '', days: onlyDays })
     useEffect(() => {
         console.log("DENTRO DO HABITS PAGE")
         axios.get(`${BASE_URL}/habits`, {
@@ -28,8 +28,8 @@ export default function HabitsPage({}) {
                 setStart(true);
                 setHabits(res.data)
                 const newUser = {...user}
-                newUser.allHabits = res.data.length;
-                setUser(newUser)
+                user.allHabits = res.data.length;
+                setUser(user)
             })
             .catch(err => {
                 console.log(err.response.data)
@@ -55,7 +55,7 @@ export default function HabitsPage({}) {
                         <button onClick={createHabit}>+</button>
                         
                     </StyledNewHabit>
-                    {createHabitBtn && <CreateHabit setCreateHabitBtn={setCreateHabitBtn}/>}
+                    {createHabitBtn && <CreateHabit setCreateHabitBtn={setCreateHabitBtn} form={form} setForm={setForm}/>}
                     <StyledText>
                         <h1>
                             Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para começar a trackear!
@@ -75,7 +75,8 @@ export default function HabitsPage({}) {
                         <h1>Meus Hábitos</h1>
                         <button onClick={createHabit}>+</button>
                     </StyledNewHabit>
-                    {createHabitBtn && <CreateHabit setCreateHabitBtn={setCreateHabitBtn} />}
+                    {createHabitBtn && <CreateHabit setCreateHabitBtn={setCreateHabitBtn} form={form} setForm={setForm} />}
+
                     <StyledText>
                         {habits.map((e) =>
                             <Habit

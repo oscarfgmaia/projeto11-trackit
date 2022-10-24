@@ -53,21 +53,16 @@ export default function TodayPage() {
             }
         })
             .then(res => {
-                const newUser = {...user}
-                newUser.todayHabits = res.data.length;
-                newUser.todayHabitsDone = res.data.filter((e)=>e.done).length
-                console.log(res.data.length)
-                setUser(newUser)
                 setTodayHabits(res.data);
+                checkProgress(res.data)
                 setStartPage(true);
-                //checkProgress(res.data)
             })
             .catch(err => {
                 console.log(err.response.data.message)
             })
-    }, [])
+    }, [user.change])
 
-    /*
+    
     function checkProgress(arr) {
         const arrSize = arr.length
         const arrFiltered = arr.filter((e) => { if (e.done === true) return true })
@@ -75,7 +70,7 @@ export default function TodayPage() {
         const newUser = {...user,progress:progress}
         setUser(newUser);
     }
-*/
+
     if (startPage === false) {
         return <LoadingPage />
     }
