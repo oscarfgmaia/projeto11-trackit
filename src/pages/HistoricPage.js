@@ -40,7 +40,6 @@ export default function HistoricPage() {
     }
 
     else {
-        console.log('false')
         navigate('/')
     }
 }
