@@ -23,7 +23,7 @@ export default function TodayHabit({ name, currentSequence, highestSequence, id,
                 .catch(err => {
                     alert(err.response.data.message)
                 })
-        } 
+        }
         else {
             axios.post(`${BASE_URL}/habits/${id}/check`, {}, {
                 headers: {

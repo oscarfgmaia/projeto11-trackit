@@ -32,7 +32,7 @@ export default function LoginPage() {
                 navigate('/hoje')
             })
             .catch(err => {
-                console.log(err.response)
+                alert(err.response.data.message)
                 setDisabledSwitch(false)
                 setNotDisabledSwitch(true)
             })
